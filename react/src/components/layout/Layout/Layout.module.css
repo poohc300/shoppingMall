@@ -1,0 +1,14 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* 전체 화면 높이 */
+}
+
+.main {
+  flex: 1;
+  overflow: auto;
+  padding-top: 80px; /* 고정된 헤더 높이만큼 패딩 추가 */
+  padding-bottom: 60px; /* 고정된 푸터 높이만큼 패딩 추가 */
+  background-color: #202020; /* 메인 콘텐츠 배경색 */
+  padding: 20px;
+}

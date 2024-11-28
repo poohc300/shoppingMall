@@ -1,0 +1,12 @@
+/* 푸터 스타일 */
+.footer {
+  text-align: center;
+  padding: 10px 0;
+  border-top: 1px solid #444;
+  background-color: #121212;
+  color: #e0e0e0;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  z-index: 1000;
+}
