@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.shoppingMall.Products.mapper.ProductsMapper">
+    <select id="findById" resultType="com.example.shoppingMall.Products.model.Products">
+        SELECT
+            id,
+            name,
+            price,
+            description,
+            stock_quantity,
+            category,
+            manufacturer_id,
+            discount,
+            image_url,
+            status
+        FROM products
+        WHERE id = #{id}
+    </select>
+    <select id="findAll" resultType="com.example.shoppingMall.Products.model.Products">
+        SELECT
+            id,
+            name,
+            price,
+            description,
+            stock_quantity,
+            category,
+            manufacturer_id,
+            discount,
+            image_url,
+            status
+        FROM products
+        WHERE status = '1'
+    </select>
+    <select id="findByCompanyId" resultType="com.example.shoppingMall.Products.model.Products">
+        SELECT
+            p.id,
+            p.name,
+            p.price,
+            p.description,
+            p.stock_quantity,
+            p.category,
+            c.name as manufacturer_nm,
+            c.id as manufacturer_id,
+            p.discount,
+            p.image_url,
+            p.status
+        FROM products p
+        LEFT JOIN company c on c.id = p.id
+    </select>
+    <insert id="save">
+        INSERT INTO Products (
+            name,
+            price,
+            description,
+            stock_quantity,
+            category,
+            manufacturer_id,
+            discount,
+            status
+        ) values (
+            #{name},
+            #{price},
+            #{description},
+            #{stock_quantity},
+            #{category},
+            #{manufacturer_id},
+            #{discount},
+            0
+        )
+    </insert>
+</mapper>
