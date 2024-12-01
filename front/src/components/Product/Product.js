@@ -1,5 +1,6 @@
 import React from "react";
 
+
 const Product = ({ product = {} }) => {
 
     const handleClick = () => {
@@ -10,7 +11,7 @@ const Product = ({ product = {} }) => {
             <img src={product.image_url} />
             <h2>{product.name}</h2>
             <p>{product.price}</p>
-            <p>{ProductList.description}</p>
+            <p>{product.description}</p>
         </div>
     )
 }

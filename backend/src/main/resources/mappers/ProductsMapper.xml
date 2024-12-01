@@ -47,6 +47,24 @@
         FROM products p
         LEFT JOIN company c on c.id = p.id
     </select>
+    <select id="searchProducts" resultType="com.example.shoppingMall.Products.model.Products">
+        SELECT
+            p.id,
+            p.name,
+            p.price,
+            p.description,
+            p.stock_quantity,
+            p.category,
+            p.discout,
+            p.image_url,
+            p.status,
+            c.id as manufacturer_id,
+            c.name as manufacturer_nm
+        FROM products p
+        LEFT JOIN company c ON c.id = p.manufacturer_id
+        WHERE p.name LIKE CONCAT('%', #{query}, '%')
+        OR c.name LIKE CONCAT('%', #{query}, '%')
+    </select>
     <insert id="save">
         INSERT INTO Products (
             name,

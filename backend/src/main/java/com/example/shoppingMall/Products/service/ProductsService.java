@@ -24,4 +24,7 @@ public class ProductsService {
     public int save(HashMap<String, Object> data) {
         return productsMapper.save(data);
     }
+    public List<Products> searchProducts(String query) {
+        return productsMapper.searchProducts(query);
+    }
 }
