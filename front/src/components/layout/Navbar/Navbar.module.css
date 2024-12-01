@@ -1,0 +1,77 @@
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background-color: #fff; /* 네비게이션 바 배경색 */
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: #007bff; /* 기본 버튼 색상 */
+  color: #fff; /* 버튼 텍스트 색상 */
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.dropdownContent {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9; /* 드롭다운 배경색 */
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdownContent a {
+  color: black; /* 드롭다운 항목 텍스트 색상 */
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdownContent a:hover {
+  background-color: #ddd; /* 드롭다운 항목 호버링 색상 */
+}
+
+.dropdown:hover .dropdownContent {
+  display: block;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  border: 1px solid #000; /* 전체 컨테이너 테두리 */
+  border-radius: 5px; /* 컨테이너 둥근 모서리 */
+}
+
+.categorySelect {
+  padding: 5px;
+  border: none;
+  border-right: 1px solid #000; /* 드롭다운 오른쪽 테두리 */
+  border-radius: 5px 0 0 5px; /* 왼쪽 모서리만 둥글게 */
+  background-color: #f9f9f9; /* 선택창 배경색 */
+  color: #000; /* 선택창 텍스트 색상 */
+}
+
+.searchBar {
+  padding: 5px;
+  border: none;
+  border-radius: 0 5px 5px 0; /* 오른쪽 모서리만 둥글게 */
+  background-color: #f9f9f9; /* 검색창 배경색 */
+  color: #000; /* 검색창 텍스트 색상 */
+  width: 200px; /* 검색창 너비 */
+}
+
+.searchBar::placeholder {
+  color: #999; /* 검색창 플레이스홀더 색상 */
+}
