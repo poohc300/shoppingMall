@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
 import * as styles from './Navbar.module.css';
+import { FaSearch } from 'react-icons/fa'
 
-const Navbar = () => {
+const Navbar = ({ onSearch = f => f }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [query, setQuery] = useState('')
 
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
+    };
+
+    const handleSearch = (e) => {
+        onSearch(query);
+    }
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') { handleSearch(); }
     };
 
     return (
@@ -28,8 +38,16 @@ const Navbar = () => {
                     <option value="음료">음료</option>
                     <option value="간식">간식</option>
                 </select>
-                <input type="text" placeholder="검색어를 입력하세요" className={styles.searchBar} />
-            </div>
+
+                <input
+                    type="text"
+                    placeholder="검색어를 입력하세요"
+                    className={styles.searchBar}
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                />
+                <FaSearch className={styles.searchIcon} onClick={handleSearch} />            </div>
         </nav>
     );
 };
