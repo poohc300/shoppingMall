@@ -1,14 +1,22 @@
 .layout {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* 전체 화면 높이 */
+  min-height: 100vh;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000; /* 헤더가 항상 최상단에 있도록 설정 */
 }
 
 .main {
   flex: 1;
-  overflow: auto;
-  padding-top: 80px; /* 고정된 헤더 높이만큼 패딩 추가 */
-  padding-bottom: 60px; /* 고정된 푸터 높이만큼 패딩 추가 */
-  background-color: #f9f9f9; /* 변경된 배경색 */
+  margin-top: 100px; /* 헤더의 높이만큼 여백 추가 */
   padding: 20px;
+}
+
+.footer {
+  margin-top: auto;
 }

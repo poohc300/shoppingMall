@@ -7,8 +7,8 @@
 
 /* 전체 배경 설정 */
 body {
-  background-color: #121212;
-  color: #e0e0e0;
+  background-color: #ffffff; /* 배경색을 흰색으로 변경 */
+  color: #000000; /* 텍스트 색상을 검정색으로 변경 */
   font-family: 'Arial', sans-serif;
   line-height: 1.6;
   height: 100%;
