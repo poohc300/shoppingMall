@@ -55,7 +55,7 @@
             p.description,
             p.stock_quantity,
             p.category,
-            p.discout,
+            p.discount,
             p.image_url,
             p.status,
             c.id as manufacturer_id,
