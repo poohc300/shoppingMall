@@ -1,26 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import OrdersProducts from './OrdersProducts';
 import { useNavigate } from 'react-router-dom';
 
 const OrderDetail = ({ productList = [] }) => {
+  console.log('주문화면 : ', productList);
   const navigate = useNavigate();
   const url = 'http://localhost:8081/order/';
 
-  const [totalPrice, setTotalPrice] = useState(product.price);
-
+  const [totalPrice, setTotalPrice] = useState(0);
   const handleCancel = () => {
     navigate('/');
   };
 
   const handleOrder = (totalPrice, quantity) => {
     console.log('주문하기 클릭시 정보: ', totalPrice, quantity, product);
+    // productsList에서 총 가격 추출해야함
     const data = {
-      customer_id: 1,
-      product_id: product.id,
-      price: product.price,
-      category: product.category,
+      customer_id: 1, // 하드코딩
       totalPrice: totalPrice,
-      quantity: quantity,
+      ordersProducts: productList,
     };
     fetch(url + 'save', {
       method: 'POST',
@@ -44,6 +42,7 @@ const OrderDetail = ({ productList = [] }) => {
       <div className='orderForm'>
         {productList.map((product) => (
           <OrdersProducts
+            key={product.id}
             product={product}
             onCancel={handleCancel}
             onPlaceOrder={handleOrder}

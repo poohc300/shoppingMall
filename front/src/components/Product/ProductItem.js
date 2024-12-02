@@ -6,7 +6,7 @@ const ProductItem = ({ product = {} }) => {
 
   const handleClick = () => {
     // product id를 path 로 해서 주문 상세 화면으로 이동
-    navigate(`/order/${product.id}`, { state: { product: product } });
+    navigate(`/order/${product.id}`, { state: { productList: [product] } });
   };
   return (
     <div className='product' tabIndex={0} onClick={handleClick}>
