@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class OrdersService {
         data.put("order_id", newOrderId);
         
         int result = ordersMapper.saveOrder(data);
-        List<OrdersProducts> query = new ArrayList<>();
+        List<OrdersProducts> ordersProductsList = (List<OrdersProducts>) data.get("orders_products")
     }
 
     public String generateOrderId(String category) {

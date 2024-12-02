@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import OrderDetail from '../../components/Order/OrderDetail';
+import OrdersDetail from '../../components/Orders/OrdersDetail';
 
-const OrderPage = () => {
+const OrdersPage = () => {
   const location = useLocation();
   console.log('받아온 상품 정보: ', location);
   const product = location.state.product;
@@ -11,9 +11,9 @@ const OrderPage = () => {
     <div className='orderPage'>
       <p>주문 화면</p>
       <div className='main'>
-        <OrderDetail product={product} />
+        <OrdersDetail product={product} />
       </div>
     </div>
   );
 };
-export default OrderPage;
+export default OrdersPage;
