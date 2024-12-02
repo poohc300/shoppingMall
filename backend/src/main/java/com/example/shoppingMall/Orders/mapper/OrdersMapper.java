@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface OrdersMapper {
 
-    int save(HashMap<String, Object> result);
+    int saveOrder(HashMap<String, Object> result);
 }

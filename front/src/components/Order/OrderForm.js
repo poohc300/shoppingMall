@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const OrderForm = ({ price = 0, onCancel = (f) => f }) => {
+const OrderForm = ({ price = 0, onCancel = (f) => f, onPlaceOrder = f => f }) => {
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(price);
 
@@ -16,8 +16,10 @@ const OrderForm = ({ price = 0, onCancel = (f) => f }) => {
     }
   };
 
-  const handleOrder = () => {};
+  const handleOrder = () => {
+    onPlaceOrder(quantity, totalPrice);
 
+  };
   const handleCancel = () => {
     onCancel();
   };

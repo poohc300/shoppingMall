@@ -2,12 +2,14 @@ package com.example.shoppingMall.Orders.service;
 
 import com.example.shoppingMall.Orders.mapper.OrdersMapper;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.example.shoppingMall.Orders.model.OrdersProducts;;
 
 @Service
 public class OrdersService {
@@ -21,8 +23,10 @@ public class OrdersService {
         String category = data.get("category").toString();
         String newOrderId = generateOrderId(category);
         System.out.println(newOrderId);
-        return 1;
-        //return ordersMapper.save(result);
+        data.put("order_id", newOrderId);
+        
+        int result = ordersMapper.saveOrder(data);
+        List<OrdersProducts> query = new ArrayList<>();
     }
 
     public String generateOrderId(String category) {
