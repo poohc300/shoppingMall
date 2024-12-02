@@ -3,6 +3,7 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 import Layout from './components/layout/Layout/Layout';
 import './styles/App.css';
 import HomePage from './pages/Home/HomePage';
+import OrderPage from './pages/Order/OrderPage';
 
 const App = () => {
   return (
@@ -11,8 +12,7 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route index element={<HomePage />} />
-            <Route path='home' element={<HomePage />} />
-            {/* 다른 페이지 추가 */}
+            <Route path='order/:productId' element={<OrderPage />} />
           </Route>
         </Routes>
       </HashRouter>

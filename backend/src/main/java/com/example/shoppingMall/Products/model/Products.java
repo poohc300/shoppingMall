@@ -9,6 +9,8 @@ public class Products {
     private String name; // 상품 이름
     private Double price; // 상품 가격
     private String description; // 상품 설명
+    private int stock_quantity; // 재고량
+    private String category; // 카테고리
     private int manufacturer_id; // 제조사 ID
     private String manufacturer_nm; // 제조사 이름
     private Double discount; // 할인율
