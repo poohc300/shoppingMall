@@ -4,12 +4,22 @@ import Navbar from '../Navbar/Navbar';
 import { useNavigate } from 'react-router-dom';
 
 const Header = ({ onSearch = f => f }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   return (
-    <div className={styles.header} tabIndex={0} onClick={() => { navigate('/')}}>
-      쇼핑몰
-      <Navbar onSearch={onSearch} />
+    <div className={styles.header}>
+      <div className={styles.navbar}>
+        <div className={styles.menu} onClick={() => navigate('/')}>
+          홈
+        </div>
+        <div className={styles.menu} onClick={() => navigate('/customer')}>
+          내정보
+        </div>
+      </div>
+      <div className={styles.search}>
+        <Navbar onSearch={onSearch} />
+      </div>
     </div>
-  )
+  );
 };
 export default Header;

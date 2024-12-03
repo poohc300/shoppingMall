@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.shoppingMall.Orders.mapper.OrdersMapper">
-
+    <select id="findByCustomerId" resultType="com.example.shoppingMall.Orders.model.Orders">
+        SELECT
+            o.id,
+            o.order_id,
+            o.total_price,
+            o.status,
+            op.id as product_id,
+            op.price as product_price,
+            op.quantity as product_quantity
+        FROM orders o
+        LEFT JOIN orders_products op on op.order_id = o.order_id
+        WHERE o.customer_id = #{id}
+    </select>
     <insert id="saveOrders" parameterType="com.example.shoppingMall.Orders.model.Orders">
         INSERT INTO orders (
             order_id,
@@ -11,7 +23,7 @@
         ) VALUES (
             #{order_id},
             #{customer_id},
-            '1',
+            '0',
             #{total_price}
         )
     </insert>
@@ -28,4 +40,5 @@
             #{quantity}
         )
     </insert>
+
 </mapper>

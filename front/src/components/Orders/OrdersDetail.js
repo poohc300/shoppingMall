@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const OrderDetail = ({ productList = [] }) => {
   console.log('주문화면 : ', productList);
   const navigate = useNavigate();
-  const url = 'http://localhost:8081/order/';
+  const url = 'http://localhost:8081/orders/';
 
   const [ordersPrice, setOrdersPrice] = useState(0);
   const [ordersProducts, setOrdersProducts] = useState([]);

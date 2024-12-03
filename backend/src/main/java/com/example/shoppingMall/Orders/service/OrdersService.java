@@ -1,6 +1,7 @@
 package com.example.shoppingMall.Orders.service;
 
 import com.example.shoppingMall.Orders.mapper.OrdersMapper;
+import com.example.shoppingMall.Orders.model.Orders;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,6 +43,10 @@ public class OrdersService {
             }
         }
         return ordersResult > 0 && allProductsSaved ? 1 : 0;
+    }
+
+    public List<Orders> findByCustomerId(int id) {
+        return ordersMapper.findByCustomerId(id);
     }
 
     public String generateOrderId() {

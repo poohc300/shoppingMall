@@ -4,6 +4,7 @@ import Layout from './components/layout/Layout/Layout';
 import './styles/App.css';
 import HomePage from './pages/Home/HomePage';
 import OrdersPage from './pages/Orders/OrdersPage';
+import CustomerPage from './pages/Customer/CustomerPage';
 
 const App = () => {
   return (
@@ -14,7 +15,11 @@ const App = () => {
             <Route index element={<HomePage />} />
             <Route path='order/:productId' element={<OrdersPage />} />
           </Route>
+          <Route path='/customer' element={<Layout />}>
+            <Route index element={<CustomerPage />} /> 
+          </Route>
         </Routes>
+     
       </HashRouter>
     </div>
   );
