@@ -8,6 +8,6 @@ public class Orders {
     private String order_id; // 주문 번호
     private int customer_id; // 고객 번호
     private String status; // 주문 상태
-    private double total_price; // 주문 총 금액
+    private int total_price; // 주문 총 금액
     private List<OrdersProducts> ordersProducts; // 주문 상품 정보
 }

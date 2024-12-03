@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 const OrdersProducts = ({ product = {}, onPriceChange = f => f }) => {
   const [quantity, setQuantity] = useState(1);
 
-
   const handleChange = (e) => {
     if (e.target.value > 0) {
       setQuantity(Number(e.target.value));

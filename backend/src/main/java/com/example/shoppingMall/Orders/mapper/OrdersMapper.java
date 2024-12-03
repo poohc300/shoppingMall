@@ -6,5 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface OrdersMapper {
 
-    int saveOrder(HashMap<String, Object> result);
+    int saveOrders(HashMap<String, Object> orderResult);
+    int saveOrdersProducts(HashMap<String, Object> productResult);
 }

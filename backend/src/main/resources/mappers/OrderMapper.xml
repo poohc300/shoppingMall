@@ -2,9 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.shoppingMall.Orders.mapper.OrdersMapper">
 
-    <insert id="save" parameterType="com.example.shoppingMall.Orders.model.Orders">
+    <insert id="saveOrders" parameterType="com.example.shoppingMall.Orders.model.Orders">
         INSERT INTO orders (
-            id,
             order_id,
             customer_id,
             status,
@@ -12,8 +11,21 @@
         ) VALUES (
             #{order_id},
             #{customer_id},
-            #{status},
+            '1',
             #{total_price}
+        )
+    </insert>
+    <insert id="saveOrdersProducts" parameterType="com.example.shoppingMall.Orders.model.OrdersProducts">
+        INSERT INTO orders_products (
+            order_id,
+            product_id,
+            price,
+            quantity
+        ) values (
+            #{order_id},
+            #{product_id},
+            #{price},
+            #{quantity}
         )
     </insert>
 </mapper>

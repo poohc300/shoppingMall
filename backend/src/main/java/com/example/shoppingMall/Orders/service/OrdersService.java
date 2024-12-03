@@ -1,6 +1,7 @@
 package com.example.shoppingMall.Orders.service;
 
 import com.example.shoppingMall.Orders.mapper.OrdersMapper;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,25 +23,39 @@ public class OrdersService {
     @Transactional
     public int save(HashMap<String, Object> data) {
         String newOrderId = generateOrderId();
-        System.out.println(newOrderId);
         data.put("order_id", newOrderId);
-        
-        int result = ordersMapper.saveOrder(data);
-        //List<OrdersProducts> ordersProductsList = (List<OrdersProducts>) data.get("orders_products")
-        return 1;
+
+        System.out.println(data);
+
+        int ordersResult = ordersMapper.saveOrders(data);
+
+        List<HashMap<String, Object>> ordersProductsList = (List<HashMap<String, Object>>) data.get("ordersProducts");
+        boolean allProductsSaved = true;
+
+        for (HashMap<String, Object> product : ordersProductsList) {
+            product.put("order_id", newOrderId);
+            product.put("product_id", product.get("id"));
+            int productsResult = ordersMapper.saveOrdersProducts(product);
+
+            if (productsResult == 0) {
+                allProductsSaved = false;
+            }
+        }
+        return ordersResult > 0 && allProductsSaved ? 1 : 0;
     }
 
     public String generateOrderId() {
         /**
          * 주문번호 생성 로직
          *
-         * 상품코드 + 현재날짜시간 밀리초 마지막 7자리 + 랜덤생성 2자리
+         * 현재날짜시간 밀리초 마지막 10자리 + 랜덤생성 4자리
          */
         long currentTimeMillis = System.currentTimeMillis();
         String timeStr = String.valueOf(currentTimeMillis);
-        String reducedTimeStr = timeStr.substring(timeStr.length() - 10); // 밀리초 값의 마지막 10자리 사용
+        String reducedTimeStr = timeStr.substring(timeStr.length() - 10);
         Random random = new Random();
-        int randomNum = 1000 + random.nextInt(9000); // 1000 부터 9999까지의 랜덤 숫자 생성 (4자리)
+        int randomNum = 1000 + random.nextInt(9000);
+
         return  reducedTimeStr + randomNum;
     }
 }

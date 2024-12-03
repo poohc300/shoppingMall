@@ -50,7 +50,7 @@ const OrderDetail = ({ productList = [] }) => {
   const handleOrder = () => {
     const data = {
       customer_id: 1, // 하드코딩
-      totalPrice: ordersPrice,
+      total_price: ordersPrice,
       ordersProducts: ordersProducts
     };
 
