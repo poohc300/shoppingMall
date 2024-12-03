@@ -21,16 +21,16 @@ public class OrdersService {
 
     @Transactional
     public int save(HashMap<String, Object> data) {
-        String category = data.get("category").toString();
-        String newOrderId = generateOrderId(category);
+        String newOrderId = generateOrderId();
         System.out.println(newOrderId);
         data.put("order_id", newOrderId);
         
         int result = ordersMapper.saveOrder(data);
-        List<OrdersProducts> ordersProductsList = (List<OrdersProducts>) data.get("orders_products")
+        //List<OrdersProducts> ordersProductsList = (List<OrdersProducts>) data.get("orders_products")
+        return 1;
     }
 
-    public String generateOrderId(String category) {
+    public String generateOrderId() {
         /**
          * 주문번호 생성 로직
          *
@@ -38,9 +38,9 @@ public class OrdersService {
          */
         long currentTimeMillis = System.currentTimeMillis();
         String timeStr = String.valueOf(currentTimeMillis);
-        String reducedTimeStr = timeStr.substring(timeStr.length() - 7); // 밀리초 값의 마지막 7자리 사용
+        String reducedTimeStr = timeStr.substring(timeStr.length() - 10); // 밀리초 값의 마지막 10자리 사용
         Random random = new Random();
-        int randomNum = 10 + random.nextInt(90); // 10부터 99까지의 랜덤 숫자 생성 (2자리)
-        return category + reducedTimeStr + randomNum;
+        int randomNum = 1000 + random.nextInt(9000); // 1000 부터 9999까지의 랜덤 숫자 생성 (4자리)
+        return  reducedTimeStr + randomNum;
     }
 }

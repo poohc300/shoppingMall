@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
 
-const OrdersProducts = ({ product = {} }) => {
+const OrdersProducts = ({ product = {}, onPriceChange = f => f }) => {
   const [quantity, setQuantity] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(product.price);
 
-  useEffect(() => {
-    const tempPrice = product.price * quantity;
-    setTotalPrice(tempPrice);
-  }, [quantity, product.price]);
 
   const handleChange = (e) => {
     if (e.target.value > 0) {
       setQuantity(Number(e.target.value));
     }
   };
+
+  useEffect(() => {
+    const priceInfo = {
+      id: product.id,
+      price: product.price,
+      quantity: quantity
+    }
+    onPriceChange(priceInfo)
+  }, [quantity])
   /**
    * 여기 지금 총가격 구해서 ordersDetail에 줘야함 계산하게
    */
