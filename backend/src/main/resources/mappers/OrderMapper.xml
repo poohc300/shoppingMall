@@ -14,6 +14,16 @@
         LEFT JOIN orders_products op on op.order_id = o.order_id
         WHERE o.customer_id = #{id}
     </select>
+    <select id="findProductsByOrderId" resultType="com.example.shoppingMall.Orders.model.OrdersProducts">
+        SELECT
+            id,
+            order_id,
+            product_id,
+            price,
+            quantity
+        FROM orders_products
+        WHERE order_id = #{order_id}
+    </select>
     <insert id="saveOrders" parameterType="com.example.shoppingMall.Orders.model.Orders">
         INSERT INTO orders (
             order_id,

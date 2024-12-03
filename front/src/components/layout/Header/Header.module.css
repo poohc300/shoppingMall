@@ -5,7 +5,7 @@
     padding: 10px 20px;
     background-color: #f8f9fa; /* 약간 눈에 띄는 밝은 회색 배경색 */
     color: black;
-    border-bottom: 2px solid #0076f1; /* 눈에 띄는 색상 */
+    border-bottom: 1px solid #020202; /* 눈에 띄는 색상 */
 }
 
 .navbar {
