@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import OrdersDetail from '../../components/Orders/OrdersDetail';
+import * as styles from './Orders.module.css';
 
 const OrdersPage = () => {
   const location = useLocation();
-  console.log('받아온 상품 정보: ', location);
   const productList = location.state.productList;
-  console.log(productList);
+
   return (
-    <div className='orderPage'>
+    <div className={styles.orderPage}>
       <p>주문 화면</p>
-      <div className='main'>
+      <div className={styles.main}>
         <OrdersDetail productList={productList} />
       </div>
     </div>

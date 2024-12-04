@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import * as styles from './Orders.module.css';
 
-const OrdersProducts = ({ product = {}, onPriceChange = f => f }) => {
+const OrdersProducts = ({ product = {}, onPriceChange = (f) => f }) => {
   const [quantity, setQuantity] = useState(1);
 
   const handleChange = (e) => {
@@ -13,22 +14,20 @@ const OrdersProducts = ({ product = {}, onPriceChange = f => f }) => {
     const priceInfo = {
       id: product.id,
       price: product.price,
-      quantity: quantity
-    }
-    onPriceChange(priceInfo)
-  }, [quantity])
+      quantity: quantity,
+    };
+    onPriceChange(priceInfo);
+  }, [quantity]);
   /**
    * 여기 지금 총가격 구해서 ordersDetail에 줘야함 계산하게
    */
   return (
-    <div>
-      <div className='orderForm'>
-        <div className='productInfo'>
-          <p>상품이름: {product.name}</p>
-          <p>상품가격: {product.price}</p>
-          <p>카테고리: {product.category}</p>
-        </div>
-        <div className='quantity'>
+    <div className={styles.orderProduct}>
+      <div className={styles.productInfo}>
+        <p>상품이름: {product.name}</p>
+        <p>상품가격: {product.price}</p>
+        <p>카테고리: {product.category}</p>
+        <div className={styles.quantity}>
           <div>
             <p>수량: {quantity}</p>
           </div>

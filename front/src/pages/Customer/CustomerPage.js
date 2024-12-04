@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import * as styles from './Customer.module.css';
-import Profile from "../../components/Customer/Profile";
-import OrdersHistory from "../../components/Customer/OrdersHistory";
+import Profile from '../../components/Customer/Profile';
+import OrdersHistoryTable from '../../components/Customer/OrdersHistoryTable';
 
 const CustomerPage = () => {
-    const [activeTab, setActiveTab] = useState('profile');
-    const [customerId, setCustomerId] = useState(1);
+  const [activeTab, setActiveTab] = useState('profile');
+  const [customerId, setCustomerId] = useState(1);
 
-    const renderContent = () => {    
-        switch (activeTab) {
-        case 'profile':
-            return <Profile />;
-        case 'orders':
-            return <OrdersHistory customerId={customerId} />; // 예: customerId를 prop으로 전달
-        default:
-            return <Profile />;
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'profile':
+        return <Profile />;
+      case 'orders':
+        return <OrdersHistoryTable customerId={customerId} />; // 예: customerId를 prop으로 전달
+      default:
+        return <Profile />;
     }
   };
 
@@ -34,9 +34,7 @@ const CustomerPage = () => {
           주문 내역
         </button>
       </div>
-      <div className={styles.tabContent}>
-        {renderContent()}
-      </div>
+      <div className={styles.tabContent}>{renderContent()}</div>
     </div>
   );
 };
