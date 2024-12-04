@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.shoppingMall.Orders.mapper.OrdersMapper">
-    <select id="findByCustomerId" resultType="com.example.shoppingMall.Orders.model.Orders">
+    <select id="findOrdersByCustomerId" resultType="com.example.shoppingMall.Orders.model.Orders">
         SELECT
             o.id,
             o.order_id,
-            o.total_price,
+            o.customer_id,
             case
                 when o.status = '0' then '주문대기'
                 when o.status = '1' then '주문중'
                 when o.status = '2' then '주문완료'
                 when o.status = '3' then '주문실패'
             end as status,
+            o.total_price,
             op.id as product_id,
             op.price as product_price,
             op.quantity as product_quantity,
@@ -24,18 +25,29 @@
     </select>
     <select id="findProductsByOrderId" resultType="com.example.shoppingMall.Orders.model.OrdersProducts">
         SELECT
-            id,
-            order_id,
-            product_id,
-            price,
-            quantity
-        FROM orders_products
+            op.id,
+            op.order_id,
+            op.product_id,
+            op.price,
+            op.quantity,
+            p.name as product_name,
+            p.description,
+            cc.description as category,
+            p.image_url,
+            c.name as manufacturer_name,
+            c.address as manufacturer_address,
+            c.contact_info as manufacturer_contact_info
+        FROM orders_products op
+        LEFT JOIN products p on p.id = op.product_id
+        LEFT JOIN company c on c.id = p.manufacturer_id
+        LEFT JOIN common_codes cc on cc.code = p.category
         WHERE order_id = #{order_id}
     </select>
     <select id="findByOrderId" resultType="com.example.shoppingMall.Orders.model.Orders">
         SELECT
             id,
             order_id,
+            customer_id,
             total_price,
             case
                 when status = '0' then '주문대기'

@@ -47,13 +47,12 @@ public class OrdersService {
 
     public List<Orders> findByCustomerId(int id) {
         // 1 주문 테이블 조회
-        List<Orders> orders = ordersMapper.findByCustomerId(id);
+        List<Orders> orders = ordersMapper.findOrdersByCustomerId(id);
         // 2 주문 테이블의 order_id로 주문상품 테이블 조회
         orders.forEach(order -> {
             List<OrdersProducts> ordersProducts = ordersMapper.findProductsByOrderId(order.getOrder_id());
             order.setOrdersProducts(ordersProducts);
         });
-        // 3 데이터 편집 후 리턴
 
         return orders;
     }
