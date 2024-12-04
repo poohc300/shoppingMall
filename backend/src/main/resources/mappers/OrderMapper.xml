@@ -24,6 +24,15 @@
         FROM orders_products
         WHERE order_id = #{order_id}
     </select>
+    <select id="findByOrderId" resultType="com.example.shoppingMall.Orders.model.Orders">
+        SELECT
+            id,
+            order_id,
+            total_price,
+            status
+        FROM orders
+        WHERE order_id = #{order_id}
+    </select>
     <insert id="saveOrders" parameterType="com.example.shoppingMall.Orders.model.Orders">
         INSERT INTO orders (
             order_id,

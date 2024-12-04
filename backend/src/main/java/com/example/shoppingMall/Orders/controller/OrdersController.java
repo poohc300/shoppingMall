@@ -20,7 +20,7 @@ public class OrdersController {
     private OrdersService ordersService;
 
     @PostMapping("/save")
-    public int save(@RequestBody HashMap<String, Object> data) {
+    public String save(@RequestBody HashMap<String, Object> data) {
         return ordersService.save(data);
     }
 
@@ -28,4 +28,7 @@ public class OrdersController {
     public List<Orders> findByCustomerId(@PathVariable int id) {
         return ordersService.findByCustomerId(id);
     }
+
+    @GetMapping("/{id}")
+    public Orders findByOrderId(@PathVariable String id) { return ordersService.findByOrderId(id);}
 }

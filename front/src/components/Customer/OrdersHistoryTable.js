@@ -10,7 +10,7 @@ const OrdersHistoryTable = ({ customerId = 0 }) => {
   const url = 'http://localhost:8081/';
 
   const handleOnClick = (order_id) => {
-    navigate(`/customer/ordersHistory/${order_id}`, { state: orders });
+    navigate(`/customer/ordersHistory/${order_id}`, { state: order_id });
   };
 
   useEffect(() => {
@@ -19,10 +19,6 @@ const OrdersHistoryTable = ({ customerId = 0 }) => {
       .then((data) => setOrders(data))
       .catch((error) => console.log(error));
   }, [customerId]);
-
-  useEffect(() => {
-    console.log('주문 데이터 받아옴: ', orders);
-  }, [orders]);
 
   /**
    * 주문내역 테이블에서 주문 테이블 데이터만 가져와서 보여주고
@@ -48,7 +44,7 @@ const OrdersHistoryTable = ({ customerId = 0 }) => {
    */
   return (
     <div className={styles.ordersHistory}>
-      <p>주문 조회 내역 테이블</p>
+      <p>주문 내역 테이블</p>
       <table className={styles.table}>
         <thead>
           <tr>

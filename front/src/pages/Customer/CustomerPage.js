@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import * as styles from './Customer.module.css';
+import * as styles from './CustomerPage.module.css';
 import Profile from '../../components/Customer/Profile';
 import OrdersHistoryTable from '../../components/Customer/OrdersHistoryTable';
 

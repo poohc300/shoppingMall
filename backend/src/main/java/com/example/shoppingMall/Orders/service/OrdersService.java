@@ -22,7 +22,7 @@ public class OrdersService {
     private OrdersMapper ordersMapper;
 
     @Transactional
-    public int save(HashMap<String, Object> data) {
+    public String save(HashMap<String, Object> data) {
         String newOrderId = generateOrderId();
         data.put("order_id", newOrderId);
 
@@ -42,7 +42,7 @@ public class OrdersService {
                 allProductsSaved = false;
             }
         }
-        return ordersResult > 0 && allProductsSaved ? 1 : 0;
+        return ordersResult > 0 && allProductsSaved ? newOrderId : "";
     }
 
     public List<Orders> findByCustomerId(int id) {
@@ -54,6 +54,14 @@ public class OrdersService {
             order.setOrdersProducts(ordersProducts);
         });
         // 3 데이터 편집 후 리턴
+
+        return orders;
+    }
+
+    public Orders findByOrderId(String id) {
+        Orders orders =  ordersMapper.findByOrderId(id);
+        List<OrdersProducts> ordersProducts = ordersMapper.findProductsByOrderId(orders.getOrder_id());
+        orders.setOrdersProducts(ordersProducts);
 
         return orders;
     }

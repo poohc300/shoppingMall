@@ -13,4 +13,5 @@ public interface OrdersMapper {
     int saveOrdersProducts(HashMap<String, Object> productResult);
     List<Orders> findByCustomerId(int id);
     List<OrdersProducts> findProductsByOrderId(String order_id);
+    Orders findByOrderId(String id);
 }

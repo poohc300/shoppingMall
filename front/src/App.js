@@ -5,7 +5,7 @@ import './styles/App.css';
 import HomePage from './pages/Home/HomePage';
 import OrdersPage from './pages/Orders/OrdersPage';
 import CustomerPage from './pages/Customer/CustomerPage';
-import OrdersHistory from './pages/OrdersHistory/OrdersHistoryPage';
+import OrdersHistoryPage from './pages/OrdersHistory/OrdersHistoryPage';
 
 const App = () => {
   return (
@@ -18,7 +18,10 @@ const App = () => {
           </Route>
           <Route path='/customer' element={<Layout />}>
             <Route index element={<CustomerPage />} />
-            <Route path='orderHistory/:orderId' element={<OrdersHistory />} />
+            <Route
+              path='ordersHistory/:orderId'
+              element={<OrdersHistoryPage />}
+            />
           </Route>
         </Routes>
       </HashRouter>

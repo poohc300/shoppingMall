@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import * as styles from './Home.module.css';
+import * as styles from './HomePage.module.css';
 import ProductList from '../../components/Product/ProductList';
 import { useOutletContext } from 'react-router-dom';
 

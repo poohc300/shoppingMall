@@ -5,6 +5,11 @@ import * as styles from './Orders.module.css';
 import Confirm from '../Common/Confirm';
 
 const OrderDetail = ({ productList = [] }) => {
+  /**
+   * 여기 주문하기 클릭 누르면 밑에 콘솔로그 2번뜸
+   * 이유 : setShowConfrim 변경하면서 리렌더링
+   *
+   */
   console.log('주문화면 : ', productList);
   const navigate = useNavigate();
   const url = 'http://localhost:8081/orders/';
@@ -17,24 +22,6 @@ const OrderDetail = ({ productList = [] }) => {
     navigate('/');
   };
 
-  // const handleOrder = (totalPrice, quantity) => {
-  //   console.log('주문하기 클릭시 정보: ', totalPrice, quantity, product);
-  //   // productsList에서 총 가격 추출해야함
-  //   const data = {
-  //     customer_id: 1, // 하드코딩
-  //     totalPrice: totalPrice,
-  //     ordersProducts: productList,
-  //   };
-  //   fetch(url + 'save', {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify(data),
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => console.log('success', data))
-  //     .catch((error) => console.log(error));
-  // };
-
   const handleOrdersProductsPrice = (ordersProductsPriceInfo) => {
     console.log('상품 수량 변동: ', ordersProductsPriceInfo);
     const isExist = ordersProducts.some(
@@ -42,7 +29,7 @@ const OrderDetail = ({ productList = [] }) => {
     );
     let temp = [];
 
-    if (isExist) {
+    if (isExist === true) {
       // 업데이트
       temp = ordersProducts.map((product) =>
         product.id === ordersProductsPriceInfo.id
@@ -80,7 +67,11 @@ const OrderDetail = ({ productList = [] }) => {
       body: JSON.stringify(data),
     })
       .then((response) => response.json())
-      .then((data) => console.log('success : ', data))
+      .then((data) => {
+        alert(`주문번호 ${data}의 주문이 성공적으로 완료되었습니다 !!`);
+        return data;
+      })
+      .then((data) => navigate(`/orderHistory/${data}`, { state: data }))
       .catch((error) => console.log('error : ', error));
   };
 
@@ -102,16 +93,6 @@ const OrderDetail = ({ productList = [] }) => {
   useEffect(() => {
     console.log('## 컨펌창 변경', showConfirm);
   }, [showConfirm]);
-  /**
-   * productList 를 받아와야함(상품이 주문에 여러개일수도 있어서)
-   * 받아온 것만큼 맵 돌려서 상품 보여주고 수량 체크해서 총합을 여기서 계산해야함
-   * 문제는 여기서 다시 상품 리스트 정보를 취합해야하는데 그 로직 찾아야함
-   * 무슨말이냐면 받아올때는 리스트로 받아와서 뿌린후 각각 계산한 결과를
-   * 이제 다시 삽입할때는 리스트로 보내야해서임
-   *
-   * -> 구분을 어차피 key값으로 하는데 product마다 totalPrice 구해놓은뒤
-   * map으로 키 돌려서 그 값 다 더한거 최종 주문에 반영하면 될듯
-   */
 
   return (
     <div className={styles.orderDetail}>
@@ -135,7 +116,9 @@ const OrderDetail = ({ productList = [] }) => {
         <Confirm
           message='주문하시겠습니까'
           onConfirm={handleConfirm}
-          onCancel={setShowConfirm(false)}
+          onCancel={() => {
+            setShowConfirm(false);
+          }}
         />
       )}
     </div>
