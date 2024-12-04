@@ -34,6 +34,19 @@ const HomePage = () => {
     }
   }, [searchQuery]);
 
+  const handleClick = (e) => {
+    const action = e.target.id;
+    sortProductList(action);
+  };
+
+  const sortProductList = (action) => {
+    let temp = [];
+    if (action === 'latest') {
+      temp = products.sort((a, b) => b.created_at - a.created_at);
+    }
+    setProducts(temp);
+  };
+
   useEffect(() => {
     fetchRecommendProducts();
   }, []);
@@ -54,13 +67,28 @@ const HomePage = () => {
   return (
     <div className={styles.homePage}>
       {products.length > 0 ? (
-        <div className='searchResult'>
-          검색결과: {searchQuery} {products.length || 0}개
+        <div>
+          <div className='searchResult'>
+            검색결과: {searchQuery} {products.length || 0}개
+          </div>
+          <div className='sortButton'>
+            <button id='latest' onClick={handleClick}>
+              최신순
+            </button>
+            <button id='lowest' onClick={handleClick}>
+              낮은가격순
+            </button>
+            <button id='highest' onClick={handleClick}>
+              높은가격순
+            </button>
+          </div>
         </div>
       ) : null}
 
       {products.length > 0 ? (
         <ProductList products={products} />
+      ) : searchQuery ? (
+        <div>검색 결과가 없습니다.</div>
       ) : (
         <ProductList products={recommendProducts} />
       )}

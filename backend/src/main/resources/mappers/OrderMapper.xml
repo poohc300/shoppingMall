@@ -6,13 +6,21 @@
             o.id,
             o.order_id,
             o.total_price,
-            o.status,
+            case
+                when o.status = '0' then '주문대기'
+                when o.status = '1' then '주문중'
+                when o.status = '2' then '주문완료'
+                when o.status = '3' then '주문실패'
+            end as status,
             op.id as product_id,
             op.price as product_price,
-            op.quantity as product_quantity
+            op.quantity as product_quantity,
+            o.created_at,
+            o.updated_at
         FROM orders o
         LEFT JOIN orders_products op on op.order_id = o.order_id
         WHERE o.customer_id = #{id}
+        ORDER BY o.created_at desc
     </select>
     <select id="findProductsByOrderId" resultType="com.example.shoppingMall.Orders.model.OrdersProducts">
         SELECT
@@ -29,9 +37,17 @@
             id,
             order_id,
             total_price,
-            status
+            case
+                when status = '0' then '주문대기'
+                when status = '1' then '주문중'
+                when status = '2' then '주문완료'
+                when status = '3' then '주문실패'
+            end as status,
+            created_at,
+            updated_at
         FROM orders
         WHERE order_id = #{order_id}
+        ORDER BY created_at desc
     </select>
     <insert id="saveOrders" parameterType="com.example.shoppingMall.Orders.model.Orders">
         INSERT INTO orders (

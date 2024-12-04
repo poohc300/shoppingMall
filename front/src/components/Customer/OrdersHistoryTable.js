@@ -45,6 +45,7 @@ const OrdersHistoryTable = ({ customerId = 0 }) => {
   return (
     <div className={styles.ordersHistory}>
       <p>주문 내역 테이블</p>
+
       <table className={styles.table}>
         <thead>
           <tr>
@@ -61,7 +62,9 @@ const OrdersHistoryTable = ({ customerId = 0 }) => {
                 <td>{order.order_id}</td>
                 <td>{order.total_price}</td>
                 <td>{order.status}</td>
-                <td>{order.created_at}</td>
+                <td>
+                  {moment(order.created_at).format('YYYY-MM-DD A hh:mm ')}
+                </td>
               </tr>
               {/* {order.ordersProducts && order.ordersProducts.length > 0 && (
                             <tr>

@@ -71,7 +71,9 @@ const OrderDetail = ({ productList = [] }) => {
         alert(`주문번호 ${data}의 주문이 성공적으로 완료되었습니다 !!`);
         return data;
       })
-      .then((data) => navigate(`/orderHistory/${data}`, { state: data }))
+      .then((data) =>
+        navigate(`/customer/ordersHistory/${data}`, { state: data })
+      )
       .catch((error) => console.log('error : ', error));
   };
 

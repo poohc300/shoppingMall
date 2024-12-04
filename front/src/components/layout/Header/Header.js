@@ -1,10 +1,11 @@
 import React from 'react';
 import * as styles from './Header.module.css';
 import Navbar from '../Navbar/Navbar';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-const Header = ({ onSearch = f => f }) => {
+const Header = ({ onSearch = (f) => f }) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <div className={styles.header}>
@@ -16,9 +17,11 @@ const Header = ({ onSearch = f => f }) => {
           내정보
         </div>
       </div>
-      <div className={styles.search}>
-        <Navbar onSearch={onSearch} />
-      </div>
+      {location.pathname === '/' && (
+        <div className={styles.search}>
+          <Navbar onSearch={onSearch} />
+        </div>
+      )}
     </div>
   );
 };
