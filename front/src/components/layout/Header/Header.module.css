@@ -1,49 +1,49 @@
 .header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #f8f9fa; /* 약간 눈에 띄는 밝은 회색 배경색 */
-    color: black;
-    border-bottom: 1px solid #020202; /* 눈에 띄는 색상 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f8f9fa; /* 약간 눈에 띄는 밝은 회색 배경색 */
+  color: black;
+  border-bottom: 1px solid #020202; /* 눈에 띄는 색상 */
 }
 
 .navbar {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .menu {
-    font-size: 18px;
-    margin: 0 20px;
-    padding: 10px 15px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  font-size: 18px;
+  margin: 0 20px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .menu:hover {
-    background-color: #e0e0e0; /* 메뉴 항목에 호버 시 배경색 변경 */
-    border-radius: 4px;
+  background-color: #e0e0e0; /* 메뉴 항목에 호버 시 배경색 변경 */
+  border-radius: 4px;
 }
 
 .search {
-    width: 100%;
-    display: flex;
-    justify-content: center; /* 검색창을 중앙에 배치 */
+  width: 100%;
+  display: flex;
+  justify-content: center; /* 검색창을 중앙에 배치 */
 }
 
 .mypage {
-    font-size: 16px;
-    padding: 5px 10px;
-    background-color: #0076f1;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  font-size: 16px;
+  padding: 5px 10px;
+  background-color: #0076f1;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .mypage:hover {
-    background-color: #005bb5;
+  background-color: #005bb5;
 }
