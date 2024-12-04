@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as styles from './OrdersHistory.module.css';
 import moment from 'moment';
+import Tooltip from '../Common/Tooltip';
 
 const OrdersHistoryTable = ({ customerId = 0 }) => {
   console.log('주문내역 테이블: ', customerId);
