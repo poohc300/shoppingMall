@@ -1,5 +1,6 @@
 package com.example.shoppingMall.Products.model;
 
+import java.util.Date;
 import lombok.Data;
 import org.w3c.dom.Text;
 
@@ -16,4 +17,6 @@ public class Products {
     private Double discount; // 할인율
     private String image_url; // 상품 이미지 URL
     private String status; // 판매상태
+    private Date created_at; // 상품 등록 시간
+    private Date updated_at; // 상품 최종 수정 시간
 }

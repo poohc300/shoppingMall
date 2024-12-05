@@ -6,25 +6,21 @@ import { useOutletContext } from 'react-router-dom';
 const HomePage = () => {
   const api = 'http://localhost:8081/';
   const { query, category } = useOutletContext();
-  console.log(query, category, 'HOME');
   const [products, setProducts] = useState([]);
   const [recommendProducts, setRecommendProducts] = useState([]);
 
-  const fetchRecommendProducts = () => {
-    if (!query) {
-      fetch(api + 'products/all')
-        .then((response) => response.json())
-        .then((data) => setRecommendProducts(data))
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  };
+  const fetchRecommendProducts = useCallback(() => {
+    fetch(api + 'products/all')
+      .then((response) => response.json())
+      .then((data) => setRecommendProducts(data))
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [api]);
 
   const fetchProducts = useCallback(() => {
     if (query) {
-      console.log('검색어: ', query, '카테고리', category);
-      fetch(api + `products/search?query=${query}&category=${category}`)
+      fetch(api + `products/search?query=${query}&category=${category || ''}`)
         .then((response) => response.json())
         .then((data) => setProducts(data))
         .catch((error) => {
@@ -32,8 +28,9 @@ const HomePage = () => {
         });
     } else {
       setProducts([]);
+      fetchRecommendProducts(); // 검색어가 비어 있을 때 추천 제품을 가져옵니다.
     }
-  }, [query]);
+  }, [query, category, fetchRecommendProducts]);
 
   const handleClick = (e) => {
     const action = e.target.id;
@@ -41,29 +38,27 @@ const HomePage = () => {
   };
 
   const sortProductList = (action) => {
-    let temp = [];
+    let temp = [...products];
+    console.log(temp);
     if (action === 'latest') {
-      temp = products.sort((a, b) => b.created_at - a.created_at);
+      temp = temp.sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      );
+    } else if (action === 'lowest') {
+      temp = temp.sort((a, b) => a.price - b.price);
+    } else if (action === 'highest') {
+      temp = temp.sort((a, b) => b.price - a.price);
     }
     setProducts(temp);
   };
 
   useEffect(() => {
-    fetchRecommendProducts();
-  }, []);
+    fetchRecommendProducts(); // 초기에는 추천 제품을 가져옵니다.
+  }, [fetchRecommendProducts]);
 
   useEffect(() => {
-    fetchProducts();
+    fetchProducts(); // 검색어 또는 카테고리가 변경될 때 검색합니다.
   }, [fetchProducts]);
-
-  /**
-   * 검색어 판별 로직
-   *
-   * 검색어가 상품이름으로 검색되었는지, 회사이름으로 검색되었는지 판별해야함
-   * 예를 들어 회사이름으로 검색할 때 특정 접수사를 사용하면 되려나
-   *
-   * 백엔드에서 검색어를 기반으로 products 조회
-   */
 
   return (
     <div className={styles.homePage}>
@@ -96,4 +91,5 @@ const HomePage = () => {
     </div>
   );
 };
+
 export default HomePage;

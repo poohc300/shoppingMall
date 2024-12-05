@@ -27,7 +27,9 @@
             manufacturer_id,
             discount,
             image_url,
-            status
+            status,
+            created_at,
+            updated_at
         FROM products
         WHERE status = '1'
     </select>
@@ -59,7 +61,9 @@
             p.image_url,
             p.status,
             c.id as manufacturer_id,
-            c.name as manufacturer_name
+            c.name as manufacturer_name,
+            p.created_at,
+            p.updated_at
         FROM products p
         LEFT JOIN company c ON c.id = p.manufacturer_id
         WHERE ( p.name LIKE CONCAT('%', #{query}, '%')
