@@ -8,9 +8,65 @@
   padding: 10px;
 }
 
-.productInfo {
-  padding: 10px;
+.productInfo label { 
+  display: block; 
+  margin-bottom: 10px; 
+  font-weight: bold; 
+} 
+.productInfo input[type="text"], .productInfo input[type="number"] { 
+  width: 100%; 
+  padding: 8px; 
+  margin-top: 5px; 
+  margin-bottom: 10px; 
+  border: 1px solid #ccc; 
+  border-radius: 4px; 
+  box-sizing: border-box; 
+} 
+.productInfo input[disabled] { 
+  background-color: #f9f9f9; 
+  cursor: not-allowed; 
+  color: #999; 
+} 
+.productInfo img { 
+  margin-top: 10px; 
+  max-width: 100%; 
+  height: 275px; 
 }
-.orderButton {
-  padding: 10px;
+
+.orderButton { 
+  margin-top: 20px; 
 }
+ .orderButton button { 
+  background-color: #ccc;
+  border: none; 
+  color: white; 
+  padding: 10px 20px; 
+  text-align: center; 
+  text-decoration: none; 
+  display: inline-block; 
+  font-size: 16px; 
+  margin: 4px 2px; 
+  border-radius: 4px; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease; 
+} 
+
+.orderButton button:hover { 
+  background-color: #bbb;
+} 
+
+#btn-payment { 
+  background-color: #000000; 
+}
+
+#btn-edit { 
+  background-color: #080808; 
+} 
+
+#btn-cancel { 
+  background-color: #0a0a0a;
+} 
+
+#btn-refund {
+   background-color: #0f0f10; 
+  }

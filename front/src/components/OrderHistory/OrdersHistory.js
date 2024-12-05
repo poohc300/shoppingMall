@@ -3,36 +3,29 @@ import { useLocation } from 'react-router-dom';
 import * as styles from './OrdersHistory.module.css';
 
 const OrdersHistory = () => {
-  // 주문 수정이 이루어 지는 곳
   const location = useLocation();
   const orderId = location.state;
   const url = 'http://localhost:8081/';
-  const [orders, setOrders] = useState(null); // 초기값을 null로 설정
-  const [ordersProducts, setOrdersProducts] = useState([]); // 초기값을 빈 배열로 설정
+  const [orders, setOrders] = useState({
+    status: '',
+    total_price: '',
+  });
+  const [ordersProducts, setOrdersProducts] = useState([]);
+  const [disabled, setDisabled] = useState(true);
 
   const fetchData = () => {
     console.log('가져온 주문번호 ', orderId);
     fetch(url + `orders/${orderId}`)
       .then((response) => response.json())
       .then((data) => {
-        setOrders(data);
-        setOrdersProducts(data.ordersProducts || []); // ordersProducts가 null일 경우 빈 배열로 설정
+        setOrders({
+          status: data.status,
+          total_price: data.total_price,
+        });
+        setOrdersProducts(data.ordersProducts || []);
       })
       .catch((error) => console.log(error));
   };
-
-  const handlePaymentClick = () => {
-    console.log('결제 버튼 클릭'); // 결제 로직 추가
-  };
-  const handleGoToPaymentClick = () => {
-    console.log('결제페이지로 이동 버튼 클릭'); // 결제 페이지로 이동하는 로직 추가
-  };
-
-  const handleEditClick = () => {};
-
-  const handleCancelClick = () => {};
-
-  const handleRefundClick = () => {};
 
   useEffect(() => {
     if (orderId) {
@@ -40,61 +33,150 @@ const OrdersHistory = () => {
     }
   }, [orderId]);
 
+  useEffect(() => {
+    if(orders.status === '주문대기') {
+      setDisabled(false)
+    }
+  }, [orders.status])
+
+  const handleChange = (e, id) => {
+    const { name, value } = e.target;
+    if(value > 0) {
+      setOrdersProducts((prevProducts) =>
+        prevProducts.map((product) =>
+        product.id === id ? { ...product, [name]: value } : product
+      )
+    );
+    }
+   
+  };
+
+  const handlePaymentClick = () => {
+    console.log('결제 버튼 클릭');
+    // 결제 로직 추가
+  };
+
+  const handleEditClick = () => {
+    console.log('수정 버튼 클릭');
+    // 주문 수정 로직 추가
+  };
+
+  const handleCancelClick = () => {
+    console.log('주문 취소 버튼 클릭');
+    // 주문 취소 로직 추가
+  };
+
+  const handleRefundClick = () => {
+    console.log('환불 버튼 클릭');
+    // 환불 로직 추가
+  };
+
+  const updateOrderStatus = (param) => {
+    const data = {
+      status: param
+    }
+    fetch(url + `/orders/${orderId}/status`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result)
+      let message = ''
+      
+      if(param === 2) {
+        message = '주문이 완료되었습니다!'
+      }
+      if(param === 3) {
+        message = '주문이 취소되었습니다'
+      }
+      alert(message);
+    })
+    .catch((error) => console.log(error))
+  }
+
   return (
     <div className={styles.ordersHistory}>
-      {orders ? (
-        <>
-          <div className={styles.status}>주문상태: {orders.status}</div>
-          <div className={styles.productInfo}>
-            <p>주문금액: {orders.total_price}</p>
-            {ordersProducts.length > 0 ? (
-              ordersProducts.map((product) => (
-                <div key={product.id}>
-                  <p>카테고리: {product.category}</p>
-                  <p>상품이름: {product.product_name}</p>
-                  <p>상품 가격: {product.price}</p>
-                  <p>상품 수량: {product.quantity}</p>
-                  <p>상품 설명: {product.description}</p>
-                  <p>제조사 이름: {product.manufacturer_name}</p>
-                  <p>제조사 주소: {product.manufacturer_address}</p>
-                  <p>제조사 연락처: {product.manufacturer_contact_info}</p>
-                  <img src={product.image_url} />
-                </div>
-              ))
-            ) : (
-              <p>주문된 상품이 없습니다.</p>
-            )}
+      <div className={styles.productInfo}>
+        <label>
+          주문상태: {orders.status}
+        </label>
+        <label>
+          주문금액: {orders.total_price} 
+        </label>
+        {ordersProducts.map((product) => (
+          <div key={product.id}>
+            <label>
+              카테고리:
+              <input type="text" value={product.category} name="category" disabled />
+            </label>
+            <label>
+              상품 이름:
+              <input type="text" value={product.product_name} name="product_name" disabled />
+            </label>
+            <label>
+              상품 가격:
+              <input type="number" value={product.price} name="price" disabled />
+            </label>
+            <label>
+              상품 수량:
+              <input
+                type="number"
+                value={product.quantity}
+                name="quantity"
+                disabled={disabled}
+                onChange={(e) => handleChange(e, product.id)}
+              />
+            </label>
+            <label>
+              상품 설명:
+              <input type="text" value={product.description} name="description" disabled />
+            </label>
+            <label>
+              제조사 이름:
+              <input type="text" value={product.manufacturer_name} name="manufacturer_name" disabled />
+            </label>
+            <label>
+              제조사 주소:
+              <input type="text" value={product.manufacturer_address} name="manufacturer_address" disabled />
+            </label>
+            <label>
+              제조사 연락처:
+              <input type="text" value={product.manufacturer_contact_info} name="manufacturer_contact_info" disabled />
+            </label>
+            <img src={product.image_url} alt="상품 이미지" />
           </div>
-          <div className={styles.orderButton}>
-            {orders.status === '주문대기' && (
-              <>
-                <button id='btn-payment' onClick={handlePaymentClick}>
-                  결제
-                </button>
-                <button id='btn-edit' onClick={handleEditClick}>
-                  수정
-                </button>
-                <button id='btn-cancel' onClick={handleCancelClick}>
-                  주문취소
-                </button>
-              </>
-            )}
-            {orders.status === '주문중' && (
-              <button id='btn-payment' onClick={handleCancelClick}>
-                주문취소
-              </button>
-            )}
-            {orders.status === '주문완료' && (
-              <button id='btn-go-to-payment' onClick={handleRefundClick}>
-                환불
-              </button>
-            )}
-            {orders.status === '주문취소' && <></>}
-          </div>
-        </>
-      ) : (
-        <div>주문 데이터를 불러오는 중입니다...</div>
-      )}
+        ))}
+      </div>
+      <div className={styles.orderButton}>
+        {orders.status === '주문대기' && (
+          <>
+            <button id='btn-payment' onClick={handlePaymentClick}>
+              결제
+            </button>
+            <button id='btn-edit' onClick={handleEditClick}>
+              수정
+            </button>
+            <button id='btn-cancel' onClick={handleCancelClick}>
+              주문취소
+            </button>
+          </>
+        )}
+        {orders.status === '주문중' && (
+          <button id='btn-cancel' onClick={handleCancelClick}>
+            주문취소
+          </button>
+        )}
+        {orders.status === '주문완료' && (
+          <button id='btn-refund' onClick={handleRefundClick}>
+            환불
+          </button>
+        )}
+        {orders.status === '주문취소' && <></>}
+      </div>
     </div>
   );
 };

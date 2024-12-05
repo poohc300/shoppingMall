@@ -87,5 +87,29 @@
             #{quantity}
         )
     </insert>
+    <update id="updateProductsByOrderId">
+        UPDATE orders_products
+        SET
+            product_id = #{data.product_id}
+            price = #{data.price},
+            quantity = #{data.quantity}
+        WHERE
+        order_id = #{orders_id} and
+        id = #{orders_products_id}
+    </update>
+    <update id="updateOrdersStatus">
+        UPDATE orders
+        SET
+            status = #{data.status}
+        WHERE
+        order_id = #{orders_id}
+    </update>
+    <update id="updateOrdersTotalPrice">
+        UPDATE orders
+        SET
+            total_price = #{total_price}
+        WHERE
+        order_id = #{orders_id}
+    </update>
 
 </mapper>
