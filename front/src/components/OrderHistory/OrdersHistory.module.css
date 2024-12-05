@@ -37,7 +37,7 @@
   margin-top: 20px; 
 }
  .orderButton button { 
-  background-color: #ccc;
+  background-color: rgb(14, 14, 14);
   border: none; 
   color: white; 
   padding: 10px 20px; 
@@ -51,9 +51,6 @@
   transition: background-color 0.3s ease; 
 } 
 
-.orderButton button:hover { 
-  background-color: #bbb;
-} 
 
 #btn-payment { 
   background-color: #000000; 

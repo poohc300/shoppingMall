@@ -10,7 +10,7 @@
                 when o.status = '0' then '주문대기'
                 when o.status = '1' then '주문중'
                 when o.status = '2' then '주문완료'
-                when o.status = '3' then '주문실패'
+                when o.status = '3' then '주문취소'
             end as status,
             o.total_price,
             op.id as product_id,
@@ -53,7 +53,7 @@
                 when status = '0' then '주문대기'
                 when status = '1' then '주문중'
                 when status = '2' then '주문완료'
-                when status = '3' then '주문실패'
+                when status = '3' then '주문취소'
             end as status,
             created_at,
             updated_at

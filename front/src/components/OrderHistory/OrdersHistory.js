@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import * as styles from './OrdersHistory.module.css';
+import Confirm from '../Common/Confirm';
 
 const OrdersHistory = () => {
   const location = useLocation();
@@ -10,6 +11,12 @@ const OrdersHistory = () => {
     status: '',
     total_price: '',
   });
+  const [initialOrders, setInitialOrders] = useState({
+    status: '',
+    total_price: ''
+  })
+  const [isDifferent, setIsDifferent] = useState(false);
+
   const [ordersProducts, setOrdersProducts] = useState([]);
   const [disabled, setDisabled] = useState(true);
 
@@ -39,6 +46,10 @@ const OrdersHistory = () => {
     }
   }, [orders.status])
 
+  useEffect(() => {
+    const areDifferent = orders.status !== initialOrders.status || orders.total_price !== initialOrders.total_price
+  }, [orders, initialOrders])
+
   const handleChange = (e, id) => {
     const { name, value } = e.target;
     if(value > 0) {
@@ -48,7 +59,6 @@ const OrdersHistory = () => {
       )
     );
     }
-   
   };
 
   const handlePaymentClick = () => {
@@ -59,6 +69,7 @@ const OrdersHistory = () => {
   const handleEditClick = () => {
     console.log('수정 버튼 클릭');
     // 주문 수정 로직 추가
+    
   };
 
   const handleCancelClick = () => {
@@ -70,6 +81,10 @@ const OrdersHistory = () => {
     console.log('환불 버튼 클릭');
     // 환불 로직 추가
   };
+
+  const updateOrderData = (param) => {
+
+  }
 
   const updateOrderStatus = (param) => {
     const data = {
