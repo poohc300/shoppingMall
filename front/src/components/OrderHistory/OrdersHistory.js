@@ -238,7 +238,7 @@ const OrdersHistory = () => {
         {orders.status === '0' && (
           <>
             <button id='btn-payment' onClick={handlePaymentClick}>
-              결제
+              주문완료
             </button>
             <button id='btn-edit' onClick={handleEditClick}>
               수정
