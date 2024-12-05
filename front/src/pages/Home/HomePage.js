@@ -28,7 +28,7 @@ const HomePage = () => {
         });
     } else {
       setProducts([]);
-      fetchRecommendProducts(); // 검색어가 비어 있을 때 추천 제품을 가져옵니다.
+      fetchRecommendProducts();
     }
   }, [query, category, fetchRecommendProducts]);
 
@@ -53,11 +53,11 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    fetchRecommendProducts(); // 초기에는 추천 제품을 가져옵니다.
+    fetchRecommendProducts();
   }, [fetchRecommendProducts]);
 
   useEffect(() => {
-    fetchProducts(); // 검색어 또는 카테고리가 변경될 때 검색합니다.
+    fetchProducts();
   }, [fetchProducts]);
 
   return (

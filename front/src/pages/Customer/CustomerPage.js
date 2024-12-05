@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import * as styles from './CustomerPage.module.css';
-import Profile from '../../components/Customer/Profile';
 import OrdersHistoryTable from '../../components/Customer/OrdersHistoryTable';
 
 const CustomerPage = () => {
@@ -12,7 +11,7 @@ const CustomerPage = () => {
       case 'orders':
         return <OrdersHistoryTable customerId={customerId} />; // 예: customerId를 prop으로 전달
       case 'profile':
-        return <Profile />;
+        return <></>;
     }
   };
 
@@ -25,12 +24,6 @@ const CustomerPage = () => {
         >
           주문 내역
         </button>
-        {/* <button
-          className={activeTab === 'profile' ? styles.activeTab : styles.tab}
-          onClick={() => setActiveTab('profile')}
-        >
-          프로필
-        </button> */}
       </div>
       <div className={styles.tabContent}>{renderContent()}</div>
     </div>
