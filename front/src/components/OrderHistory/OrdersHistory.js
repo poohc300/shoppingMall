@@ -9,9 +9,6 @@ const OrdersHistory = () => {
   const orderId = location.state;
   const url = 'http://localhost:8081/';
   const [orders, setOrders] = useState({});
-  const [initialOrders, setInitialOrders] = useState({});
-  const [isDifferent, setIsDifferent] = useState(false);
-
   const [ordersProducts, setOrdersProducts] = useState([]);
   const [disabled, setDisabled] = useState(true);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -92,12 +89,6 @@ const OrdersHistory = () => {
       setDisabled(false);
     }
   }, [orders.status]);
-
-  useEffect(() => {
-    const areDifferent =
-      orders.status !== initialOrders.status ||
-      orders.total_price !== initialOrders.total_price;
-  }, [orders, initialOrders]);
 
   useEffect(() => {}, [ordersProducts.quantity]);
 
@@ -237,14 +228,15 @@ const OrdersHistory = () => {
       <div className={styles.orderButton}>
         {orders.status === '0' && (
           <>
-            <button id='btn-payment' onClick={handlePaymentClick}>
-              주문완료
-            </button>
             <button id='btn-edit' onClick={handleEditClick}>
               수정
             </button>
+
             <button id='btn-cancel' onClick={handleCancelClick}>
               주문취소
+            </button>
+            <button id='btn-payment' onClick={handlePaymentClick}>
+              주문완료
             </button>
           </>
         )}

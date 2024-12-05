@@ -33,11 +33,12 @@
             op.quantity,
             p.name as product_name,
             p.description,
-            cc.description as category,
+            p.category,
             p.image_url,
             c.name as manufacturer_name,
             c.address as manufacturer_address,
-            c.contact_info as manufacturer_contact_info
+            c.contact_info as manufacturer_contact_info,
+            cc.description as category_name
         FROM orders_products op
         LEFT JOIN products p on p.id = op.product_id
         LEFT JOIN company c on c.id = p.manufacturer_id

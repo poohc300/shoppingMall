@@ -3,17 +3,19 @@
 <mapper namespace="com.example.shoppingMall.Products.mapper.ProductsMapper">
     <select id="findById" resultType="com.example.shoppingMall.Products.model.Products">
         SELECT
-            id,
-            name,
-            price,
-            description,
-            stock_quantity,
-            category,
-            manufacturer_id,
-            discount,
-            image_url,
-            status
-        FROM products
+            p.id,
+            p.name,
+            p.price,
+            p.description,
+            p.stock_quantity,
+            p.category,
+            p.manufacturer_id,
+            p.discount,
+            p.image_url,
+            p.status,
+            cc.description as category_name
+        FROM products p
+        LEFT JOIN common_code cc on cc.code = p.category
         WHERE id = #{id}
     </select>
     <select id="findAll" resultType="com.example.shoppingMall.Products.model.Products">

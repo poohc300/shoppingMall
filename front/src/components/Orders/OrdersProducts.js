@@ -18,15 +18,12 @@ const OrdersProducts = ({ product = {}, onPriceChange = (f) => f }) => {
     };
     onPriceChange(priceInfo);
   }, [quantity]);
-  /**
-   * 여기 지금 총가격 구해서 ordersDetail에 줘야함 계산하게
-   */
+
   return (
     <div className={styles.orderProduct}>
       <div className={styles.productInfo}>
         <p>상품이름: {product.name}</p>
         <p>상품가격: {product.price}</p>
-        <p>카테고리: {product.category}</p>
         <div className={styles.quantity}>
           <div>
             <p>수량: {quantity}</p>
@@ -35,6 +32,10 @@ const OrdersProducts = ({ product = {}, onPriceChange = (f) => f }) => {
             <input type='number' value={quantity} onChange={handleChange} />
           </div>
         </div>
+        <img
+          src={product.image_url}
+          style={{ height: '275px', marginTop: '10px' }}
+        />
       </div>
     </div>
   );

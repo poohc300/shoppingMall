@@ -4,7 +4,6 @@ import * as styles from './OrdersHistory.module.css';
 import moment from 'moment';
 
 const OrdersHistoryTable = ({ customerId = 0 }) => {
-  console.log('주문내역 테이블: ', customerId);
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const url = 'http://localhost:8081/';

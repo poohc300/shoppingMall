@@ -5,12 +5,6 @@ import * as styles from './Orders.module.css';
 import Confirm from '../Common/Confirm';
 
 const OrderDetail = ({ productList = [] }) => {
-  /**
-   * 여기 주문하기 클릭 누르면 밑에 콘솔로그 2번뜸
-   * 이유 : setShowConfrim 변경하면서 리렌더링
-   *
-   */
-  console.log('주문화면 : ', productList);
   const navigate = useNavigate();
   const url = 'http://localhost:8081/orders/';
 
@@ -23,7 +17,6 @@ const OrderDetail = ({ productList = [] }) => {
   };
 
   const handleOrdersProductsPrice = (ordersProductsPriceInfo) => {
-    console.log('상품 수량 변동: ', ordersProductsPriceInfo);
     const isExist = ordersProducts.some(
       (product) => product.id === ordersProductsPriceInfo.id
     );
@@ -78,23 +71,18 @@ const OrderDetail = ({ productList = [] }) => {
   };
 
   useEffect(() => {
-    console.log(ordersProducts);
     // 주문 총 가격 계산
-    const testProducts = [
-      { id: 1, price: 1000, quantity: 10 },
-      { id: 2, price: 2000, quantity: 10 },
-      { id: 3, price: 100, quantity: 50 },
-    ];
+    // const testProducts = [
+    //   { id: 1, price: 1000, quantity: 10 },
+    //   { id: 2, price: 2000, quantity: 10 },
+    //   { id: 3, price: 100, quantity: 50 },
+    // ];
     const totalPrice = ordersProducts.reduce((accumulator, product) => {
       return accumulator + product.price * product.quantity;
     }, 0);
 
     setOrdersPrice(totalPrice);
   }, [ordersProducts]);
-
-  useEffect(() => {
-    console.log('## 컨펌창 변경', showConfirm);
-  }, [showConfirm]);
 
   return (
     <div className={styles.orderDetail}>
@@ -107,7 +95,7 @@ const OrderDetail = ({ productList = [] }) => {
           />
         ))}
         <div className={styles.totalPrice}>
-          <p>주문 금액: {ordersPrice}</p>
+          <label>주문 금액: {ordersPrice}</label>
         </div>
         <div className={styles.orderButton}>
           <button onClick={handleOrderClick}>주문하기</button>

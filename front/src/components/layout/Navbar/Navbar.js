@@ -27,17 +27,7 @@ const Navbar = ({ onSearch = (f) => f }) => {
         className={styles.dropdown}
         onMouseEnter={toggleDropdown}
         onMouseLeave={toggleDropdown}
-      >
-        {/* <button className={styles.dropbtn}>카테고리</button> */}
-        {/* {dropdownOpen && (
-          <div className={styles.dropdownContent}>
-            <a href='#'>전체</a>
-            <a href='#'>식료품</a>
-            <a href='#'>음료</a>
-            <a href='#'>간식</a>
-          </div>
-        )} */}
-      </div>
+      ></div>
       <div className={styles.searchContainer}>
         <select
           className={styles.categorySelect}
