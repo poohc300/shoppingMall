@@ -11,9 +11,9 @@ public interface OrdersMapper {
 
     int saveOrders(HashMap<String, Object> orderResult);
     int saveOrdersProducts(HashMap<String, Object> productResult);
-    List<Orders> findOrdersByCustomerId(int id);
+    List<Orders> findOrdersByCustomerId(int customer_id);
     List<OrdersProducts> findProductsByOrderId(String orders_id);
-    Orders findByOrderId(String id);
+    Orders findByOrderId(String orders_id);
     int updateProductsByOrderId(String orders_id, int orders_products_id, HashMap<String, Object> data);
     int updateOrdersTotalPrice(String orders_id, int total_price);
     int updateOrdersStatus(String orders_id, HashMap<String, Object> data);

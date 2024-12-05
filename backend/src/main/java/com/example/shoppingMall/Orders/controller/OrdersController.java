@@ -26,13 +26,13 @@ public class OrdersController {
         return ordersService.save(data);
     }
 
-    @GetMapping("/customer/{id}")
-    public List<Orders> findByCustomerId(@PathVariable int id) {
-        return ordersService.findByCustomerId(id);
+    @GetMapping("/customer/{customer_id}")
+    public List<Orders> findByCustomerId(@PathVariable int customer_id) {
+        return ordersService.findByCustomerId(customer_id);
     }
 
-    @GetMapping("/{id}")
-    public Orders findByOrderId(@PathVariable String id) { return ordersService.findByOrderId(id);}
+    @GetMapping("/{orders_id}")
+    public Orders findByOrderId(@PathVariable String orders_id) { return ordersService.findByOrderId(orders_id);}
 
     @PatchMapping("/{orders_id}/products/{orders_products_id}")
     public int updateProductsByOrderId(

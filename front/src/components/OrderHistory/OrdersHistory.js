@@ -8,14 +8,8 @@ const OrdersHistory = () => {
   const navigate = useNavigate();
   const orderId = location.state;
   const url = 'http://localhost:8081/';
-  const [orders, setOrders] = useState({
-    status: '',
-    total_price: '',
-  });
-  const [initialOrders, setInitialOrders] = useState({
-    status: '',
-    total_price: '',
-  });
+  const [orders, setOrders] = useState({});
+  const [initialOrders, setInitialOrders] = useState({});
   const [isDifferent, setIsDifferent] = useState(false);
 
   const [ordersProducts, setOrdersProducts] = useState([]);
@@ -30,10 +24,7 @@ const OrdersHistory = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log('주문데이터 : ', data);
-        setOrders({
-          status: data.status,
-          total_price: data.total_price,
-        });
+        setOrders(data);
         setOrdersProducts(data.ordersProducts || []);
       })
       .catch((error) => console.log(error));
@@ -81,11 +72,9 @@ const OrdersHistory = () => {
 
         if (status === '2') {
           message = '주문이 완료되었습니다!';
-          navigate('/customer');
         }
         if (status === '3') {
           message = '주문이 취소되었습니다';
-          navigate('/customer');
         }
         alert(message);
       })
@@ -137,7 +126,6 @@ const OrdersHistory = () => {
   const handlePaymentClick = () => {
     console.log('결제 버튼 클릭');
     setConfirmMessage('결제하시겠습니까? ');
-
     setStatus('2');
     setShowConfirm(true);
   };
@@ -152,13 +140,13 @@ const OrdersHistory = () => {
     console.log('주문 취소 버튼 클릭');
     setStatus('3');
     setConfirmMessage('주문 취소하시겠습니까? ');
-
-    updateOrdersStatus();
+    setShowConfirm(true);
   };
 
   const handleRefundClick = () => {
     console.log('환불 버튼 클릭');
     setStatus('3');
+    setConfirmMessage('환불하시겠습니까? ');
     setShowConfirm(true);
   };
 
@@ -278,7 +266,7 @@ const OrdersHistory = () => {
           onConfirm={() => {
             if (status) {
               updateOrdersStatus();
-              navigate('/customer');
+              navigate('/customer', { state: orders.customer_id });
             } else {
               updateOrders();
             }

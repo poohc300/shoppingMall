@@ -24,7 +24,7 @@ public class OrdersService {
     @Transactional
     public String save(HashMap<String, Object> data) {
         String newOrderId = generateOrderId();
-        data.put("order_id", newOrderId);
+        data.put("orders_id", newOrderId);
 
         System.out.println(data);
 
@@ -34,7 +34,7 @@ public class OrdersService {
         boolean allProductsSaved = true;
 
         for (HashMap<String, Object> product : ordersProductsList) {
-            product.put("order_id", newOrderId);
+            product.put("orders_id", newOrderId);
             product.put("product_id", product.get("id"));
             int productsResult = ordersMapper.saveOrdersProducts(product);
 
@@ -45,9 +45,9 @@ public class OrdersService {
         return ordersResult > 0 && allProductsSaved ? newOrderId : "";
     }
 
-    public List<Orders> findByCustomerId(int id) {
+    public List<Orders> findByCustomerId(int customer_id) {
         // 1 주문 테이블 조회
-        List<Orders> orders = ordersMapper.findOrdersByCustomerId(id);
+        List<Orders> orders = ordersMapper.findOrdersByCustomerId(customer_id);
         // 2 주문 테이블의 order_id로 주문상품 테이블 조회
         orders.forEach(order -> {
             List<OrdersProducts> ordersProducts = ordersMapper.findProductsByOrderId(order.getOrder_id());
@@ -57,8 +57,8 @@ public class OrdersService {
         return orders;
     }
 
-    public Orders findByOrderId(String id) {
-        Orders orders =  ordersMapper.findByOrderId(id);
+    public Orders findByOrderId(String order_id) {
+        Orders orders =  ordersMapper.findByOrderId(order_id);
         List<OrdersProducts> ordersProducts = ordersMapper.findProductsByOrderId(orders.getOrder_id());
         orders.setOrdersProducts(ordersProducts);
 
