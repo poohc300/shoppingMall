@@ -5,10 +5,16 @@ import Footer from '../Footer/Footer';
 import * as styles from './Layout.module.css';
 
 const Layout = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [data, setData] = useState({
+    query: '',
+    category: '',
+  });
 
-  const handleSearch = (query) => {
-    setSearchQuery(query);
+  const handleSearch = (query, category) => {
+    setData({
+      query: query,
+      category: category,
+    });
   };
   return (
     <div className={styles.layout}>
@@ -16,7 +22,7 @@ const Layout = () => {
         <Header onSearch={handleSearch} />
       </div>
       <div className={styles.main}>
-        <Outlet context={searchQuery} /> {/** 자식 라우트 렌더링 되는 곳 */}
+        <Outlet context={data} /> {/** 자식 라우트 렌더링 되는 곳 */}
       </div>
       <Footer className={styles.footer} />
     </div>

@@ -59,11 +59,15 @@
             p.image_url,
             p.status,
             c.id as manufacturer_id,
-            c.name as manufacturer_nm
+            c.name as manufacturer_name
         FROM products p
         LEFT JOIN company c ON c.id = p.manufacturer_id
-        WHERE p.name LIKE CONCAT('%', #{query}, '%')
+        WHERE ( p.name LIKE CONCAT('%', #{query}, '%')
         OR c.name LIKE CONCAT('%', #{query}, '%')
+        OR p.description LIKE CONCAT('%', #{query}, '%') )
+        <if test="category != null and category != ''">
+            AND p.category = #{category}
+        </if>
     </select>
     <insert id="save">
         INSERT INTO Products (

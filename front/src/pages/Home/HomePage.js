@@ -5,12 +5,13 @@ import { useOutletContext } from 'react-router-dom';
 
 const HomePage = () => {
   const api = 'http://localhost:8081/';
-  const searchQuery = useOutletContext();
+  const { query, category } = useOutletContext();
+  console.log(query, category, 'HOME');
   const [products, setProducts] = useState([]);
   const [recommendProducts, setRecommendProducts] = useState([]);
 
   const fetchRecommendProducts = () => {
-    if (!searchQuery) {
+    if (!query) {
       fetch(api + 'products/all')
         .then((response) => response.json())
         .then((data) => setRecommendProducts(data))
@@ -21,9 +22,9 @@ const HomePage = () => {
   };
 
   const fetchProducts = useCallback(() => {
-    if (searchQuery) {
-      console.log('검색어로 조회: ', searchQuery);
-      fetch(api + `products/search?query=${searchQuery}`)
+    if (query) {
+      console.log('검색어: ', query, '카테고리', category);
+      fetch(api + `products/search?query=${query}&category=${category}`)
         .then((response) => response.json())
         .then((data) => setProducts(data))
         .catch((error) => {
@@ -32,7 +33,7 @@ const HomePage = () => {
     } else {
       setProducts([]);
     }
-  }, [searchQuery]);
+  }, [query]);
 
   const handleClick = (e) => {
     const action = e.target.id;
@@ -69,7 +70,7 @@ const HomePage = () => {
       {products.length > 0 ? (
         <div>
           <div className='searchResult'>
-            검색결과: {searchQuery} {products.length || 0}개
+            검색결과: {query} {products.length || 0}개
           </div>
           <div className='sortButton'>
             <button id='latest' onClick={handleClick}>
@@ -87,7 +88,7 @@ const HomePage = () => {
 
       {products.length > 0 ? (
         <ProductList products={products} />
-      ) : searchQuery ? (
+      ) : query ? (
         <div>검색 결과가 없습니다.</div>
       ) : (
         <ProductList products={recommendProducts} />

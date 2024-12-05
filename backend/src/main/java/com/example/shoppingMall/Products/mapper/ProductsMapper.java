@@ -12,6 +12,6 @@ public interface ProductsMapper {
     Products findById(int id);
     List<Products> findAll();
     List<Products> findByCompanyId(int id);
-    List<Products> searchProducts(@Param("query") String query);
+    List<Products> searchProducts(String query, String category);
     int save(HashMap<String,Object> data);
 }

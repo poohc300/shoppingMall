@@ -5,13 +5,14 @@ import { FaSearch } from 'react-icons/fa';
 const Navbar = ({ onSearch = (f) => f }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [query, setQuery] = useState('');
+  const [category, setCategory] = useState('');
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
   const handleSearch = (e) => {
-    onSearch(query);
+    onSearch(query, category);
   };
 
   const handleKeyDown = (e) => {
@@ -38,11 +39,14 @@ const Navbar = ({ onSearch = (f) => f }) => {
         )} */}
       </div>
       <div className={styles.searchContainer}>
-        <select className={styles.categorySelect}>
-          <option value='전체'>전체</option>
-          <option value='식품'>식품</option>
-          <option value='음료'>의류</option>
-          <option value='간식'>도서</option>
+        <select
+          className={styles.categorySelect}
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        >
+          <option value=''>전체</option>
+          <option value='FOOD'>식품</option>
+          <option value='ELECT'>전자제품</option>
         </select>
         <input
           type='text'
@@ -52,7 +56,7 @@ const Navbar = ({ onSearch = (f) => f }) => {
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={handleKeyDown}
         />
-        <FaSearch className={styles.searchIcon} onClick={handleSearch} />{' '}
+        <FaSearch className={styles.searchIcon} onClick={handleSearch} />
       </div>
     </nav>
   );
