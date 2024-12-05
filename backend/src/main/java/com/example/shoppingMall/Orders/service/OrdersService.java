@@ -66,30 +66,30 @@ public class OrdersService {
     }
 
     @Transactional
-    public int updateProductsByOrderId(String order_id, int orders_products_id, HashMap<String, Object> data) {
+    public int updateProductsByOrderId(String orders_id, int orders_products_id, HashMap<String, Object> data) {
         /*
          * 주문에 속한 상품의 정보를 변경하는 API
          */
-        int result = ordersMapper.updateProductsByOrderId(order_id, orders_products_id, data);
+        int result = ordersMapper.updateProductsByOrderId(orders_id, orders_products_id, data);
         int ordersResult = 0;
         if(result > 0) {
             // orders_id로 주문상품 리스트 조회
-            List<OrdersProducts> ordersProducts = ordersMapper.findProductsByOrderId(order_id);
+            List<OrdersProducts> ordersProducts = ordersMapper.findProductsByOrderId(orders_id);
             // 주문상품 들의 금액 총합 계산
             int total_price = ordersProducts
                                 .stream()
                                 .mapToInt(product -> product.getPrice() * product.getQuantity())
                                 .sum();
             // 주문의 주문총액 업데이트
-            ordersResult = ordersMapper.updateOrdersTotalPrice(order_id, total_price);
+            ordersResult = ordersMapper.updateOrdersTotalPrice(orders_id, total_price);
 
         }
         return result > 0 && ordersResult > 0 ? 1 : 0;
     }
 
     @Transactional
-    public int updateOrdersStatus(String order_id, HashMap<String, Object> data) {
-        int result = ordersMapper.updateOrdersStatus(order_id, data);
+    public int updateOrdersStatus(String orders_id, HashMap<String, Object> data) {
+        int result = ordersMapper.updateOrdersStatus(orders_id, data);
         return result;
     }
 

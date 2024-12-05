@@ -11,7 +11,8 @@
                 when o.status = '1' then '주문중'
                 when o.status = '2' then '주문완료'
                 when o.status = '3' then '주문취소'
-            end as status,
+            end as status_name,
+            o.status,
             o.total_price,
             op.id as product_id,
             op.price as product_price,
@@ -21,7 +22,7 @@
         FROM orders o
         LEFT JOIN orders_products op on op.order_id = o.order_id
         WHERE o.customer_id = #{id}
-        ORDER BY o.created_at desc
+        ORDER BY o.created_at desc, o.updated_at desc, status asc
     </select>
     <select id="findProductsByOrderId" resultType="com.example.shoppingMall.Orders.model.OrdersProducts">
         SELECT
@@ -41,7 +42,7 @@
         LEFT JOIN products p on p.id = op.product_id
         LEFT JOIN company c on c.id = p.manufacturer_id
         LEFT JOIN common_codes cc on cc.code = p.category
-        WHERE order_id = #{order_id}
+        WHERE order_id = #{orders_id}
     </select>
     <select id="findByOrderId" resultType="com.example.shoppingMall.Orders.model.Orders">
         SELECT
@@ -54,7 +55,8 @@
                 when status = '1' then '주문중'
                 when status = '2' then '주문완료'
                 when status = '3' then '주문취소'
-            end as status,
+            end as status_name,
+            status,
             created_at,
             updated_at
         FROM orders
@@ -90,8 +92,6 @@
     <update id="updateProductsByOrderId">
         UPDATE orders_products
         SET
-            product_id = #{data.product_id}
-            price = #{data.price},
             quantity = #{data.quantity}
         WHERE
         order_id = #{orders_id} and
@@ -100,14 +100,17 @@
     <update id="updateOrdersStatus">
         UPDATE orders
         SET
-            status = #{data.status}
+            status = #{data.status},
+            updated_at = current_timestamp
+
         WHERE
         order_id = #{orders_id}
     </update>
     <update id="updateOrdersTotalPrice">
         UPDATE orders
         SET
-            total_price = #{total_price}
+            total_price = #{total_price},
+            updated_at = current_timestamp
         WHERE
         order_id = #{orders_id}
     </update>

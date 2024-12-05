@@ -53,7 +53,8 @@ const OrdersHistoryTable = ({ customerId = 0 }) => {
             <th>주문 번호</th>
             <th>총 금액</th>
             <th>주문 상태</th>
-            <th>주문 생성일</th>
+            <th>주문생성 시간</th>
+            <th>주문최종수정 시간</th>
           </tr>
         </thead>
         <tbody>
@@ -62,9 +63,12 @@ const OrdersHistoryTable = ({ customerId = 0 }) => {
               <tr onClick={() => handleOnClick(order.order_id)}>
                 <td>{order.order_id}</td>
                 <td>{order.total_price}</td>
-                <td>{order.status}</td>
+                <td>{order.status_name}</td>
                 <td>
                   {moment(order.created_at).format('YYYY-MM-DD A hh:mm ')}
+                </td>
+                <td>
+                  {moment(order.updated_at).format('YYYY-MM-DD A hh:mm ')}
                 </td>
               </tr>
               {/* {order.ordersProducts && order.ordersProducts.length > 0 && (

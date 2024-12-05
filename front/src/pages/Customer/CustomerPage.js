@@ -25,12 +25,12 @@ const CustomerPage = () => {
         >
           주문 내역
         </button>
-        <button
+        {/* <button
           className={activeTab === 'profile' ? styles.activeTab : styles.tab}
           onClick={() => setActiveTab('profile')}
         >
           프로필
-        </button>
+        </button> */}
       </div>
       <div className={styles.tabContent}>{renderContent()}</div>
     </div>

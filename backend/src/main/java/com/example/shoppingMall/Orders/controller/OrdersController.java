@@ -34,14 +34,14 @@ public class OrdersController {
     @GetMapping("/{id}")
     public Orders findByOrderId(@PathVariable String id) { return ordersService.findByOrderId(id);}
 
-    @PatchMapping("/{order_id}/products/{orders_products_id}")
+    @PatchMapping("/{orders_id}/products/{orders_products_id}")
     public int updateProductsByOrderId(
-        @PathVariable String order_id,
+        @PathVariable String orders_id,
         @PathVariable int orders_products_id,
         @RequestBody HashMap<String, Object> data) {
-        return ordersService.updateProductsByOrderId(order_id, orders_products_id, data);}
-    @PatchMapping("/{order_id}/status")
-    public int updateOrdersStatus(@PathVariable String order_id, @RequestBody HashMap<String, Object> data) {
-        return ordersService.updateOrdersStatus(order_id, data);
+        return ordersService.updateProductsByOrderId(orders_id, orders_products_id, data);}
+    @PatchMapping("/{orders_id}/status")
+    public int updateOrdersStatus(@PathVariable String orders_id, @RequestBody HashMap<String, Object> data) {
+        return ordersService.updateOrdersStatus(orders_id, data);
     }
 }
