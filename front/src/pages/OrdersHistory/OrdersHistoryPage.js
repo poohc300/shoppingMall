@@ -9,7 +9,7 @@ const OrdersHistoryPage = () => {
 
   return (
     <div className={styles.ordersHistoryPage}>
-      <div>주문내역 페이지</div>
+      <div>주문상세내역 페이지</div>
       <OrdersHistory orders={orders} />
     </div>
   );
