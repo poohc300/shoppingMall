@@ -2,6 +2,8 @@ package com.example.shoppingMall.Orders.service;
 
 import com.example.shoppingMall.Orders.mapper.OrdersMapper;
 import com.example.shoppingMall.Orders.model.Orders;
+import com.example.shoppingMall.exception.CustomException;
+import com.example.shoppingMall.exception.ErrorCode;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,12 +28,15 @@ public class OrdersService {
         String newOrderId = generateOrderId();
         data.put("orders_id", newOrderId);
 
-        System.out.println(data);
-
         int ordersResult = ordersMapper.saveOrders(data);
+        if(ordersResult == 0) {
+            throw new CustomException(ErrorCode.INVALID_ORDERS_DATA);
+        }
 
         List<HashMap<String, Object>> ordersProductsList = (List<HashMap<String, Object>>) data.get("ordersProducts");
-        boolean allProductsSaved = true;
+        if(ordersProductsList.isEmpty()) {
+            throw new CustomException(ErrorCode.EMPTY_ORDERS_LISTS);
+        }
 
         for (HashMap<String, Object> product : ordersProductsList) {
             product.put("orders_id", newOrderId);
@@ -39,18 +44,24 @@ public class OrdersService {
             int productsResult = ordersMapper.saveOrdersProducts(product);
 
             if (productsResult == 0) {
-                allProductsSaved = false;
+                throw  new CustomException(ErrorCode.INVALID_ORDERS_PRODUCTS_DATA);
             }
         }
-        return ordersResult > 0 && allProductsSaved ? newOrderId : "";
+        return newOrderId;
     }
 
     public List<Orders> findByCustomerId(int customer_id) {
         // 1 주문 테이블 조회
         List<Orders> orders = ordersMapper.findOrdersByCustomerId(customer_id);
+        if(orders.isEmpty()) {
+            throw new CustomException(ErrorCode.EMPTY_ORDERS_LISTS);
+        }
         // 2 주문 테이블의 order_id로 주문상품 테이블 조회
         orders.forEach(order -> {
             List<OrdersProducts> ordersProducts = ordersMapper.findProductsByOrderId(order.getOrder_id());
+            if(ordersProducts.isEmpty()) {
+                throw new CustomException(ErrorCode.EMPTY_ORDERS_PRODUCTS_LISTS);
+            }
             order.setOrdersProducts(ordersProducts);
         });
 
@@ -59,7 +70,13 @@ public class OrdersService {
 
     public Orders findByOrderId(String order_id) {
         Orders orders =  ordersMapper.findByOrderId(order_id);
+        if(orders == null) {
+            throw new CustomException(ErrorCode.EMPTY_ORDERS_LISTS);
+        }
         List<OrdersProducts> ordersProducts = ordersMapper.findProductsByOrderId(orders.getOrder_id());
+        if(ordersProducts.isEmpty()) {
+            throw new CustomException(ErrorCode.EMPTY_ORDERS_PRODUCTS_LISTS);
+        }
         orders.setOrdersProducts(ordersProducts);
 
         return orders;
@@ -71,25 +88,40 @@ public class OrdersService {
          * 주문에 속한 상품의 정보를 변경하는 API
          */
         int result = ordersMapper.updateProductsByOrderId(orders_id, orders_products_id, data);
-        int ordersResult = 0;
+
+        if(result == 0) {
+            throw new CustomException(ErrorCode.INVALID_ORDERS_PRODUCTS_DATA);
+        }
+
+
+
         if(result > 0) {
             // orders_id로 주문상품 리스트 조회
             List<OrdersProducts> ordersProducts = ordersMapper.findProductsByOrderId(orders_id);
+
+            if(ordersProducts.isEmpty()) {
+                throw new CustomException(ErrorCode.EMPTY_ORDERS_PRODUCTS_LISTS);
+            }
             // 주문상품 들의 금액 총합 계산
             int total_price = ordersProducts
                                 .stream()
                                 .mapToInt(product -> product.getPrice() * product.getQuantity())
                                 .sum();
             // 주문의 주문총액 업데이트
-            ordersResult = ordersMapper.updateOrdersTotalPrice(orders_id, total_price);
-
+            int ordersResult = ordersMapper.updateOrdersTotalPrice(orders_id, total_price);
+            if(ordersResult == 0) {
+                throw new CustomException(ErrorCode.INVALID_ORDERS_DATA);
+            }
         }
-        return result > 0 && ordersResult > 0 ? 1 : 0;
+        return 1;
     }
 
     @Transactional
     public int updateOrdersStatus(String orders_id, HashMap<String, Object> data) {
         int result = ordersMapper.updateOrdersStatus(orders_id, data);
+        if(result == 0) {
+            throw new CustomException(ErrorCode.INVALID_ORDERS_DATA);
+        }
         return result;
     }
 

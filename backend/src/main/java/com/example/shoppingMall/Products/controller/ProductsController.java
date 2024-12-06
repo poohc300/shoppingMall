@@ -5,6 +5,7 @@ import com.example.shoppingMall.Products.service.ProductsService;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,29 +22,35 @@ public class ProductsController {
     private ProductsService productsService;
 
     @GetMapping("/{id}")
-    public Products findById(@PathVariable int id) {
-        return productsService.findById(id);
-    }
+    public ResponseEntity<Products> findById(@PathVariable int id) {
+        Products products =  productsService.findById(id);
+        return ResponseEntity.ok(products);
+ }
 
     @GetMapping("/all")
-    public List<Products> findAll() {
-        return productsService.findAll();
+    public ResponseEntity<List<Products>> findAll() {
+       List<Products> products =  productsService.findAll();
+       return ResponseEntity.ok(products);
     }
+
     @GetMapping("/company/{id}")
-    public List<Products> findByCompanyId(@PathVariable int id) {
-        return productsService.findByCompanyId(id);
+    public ResponseEntity<List<Products>> findByCompanyId(@PathVariable int id) {
+        List<Products> products = productsService.findByCompanyId(id);
+        return ResponseEntity.ok(products);
     }
 
     @PostMapping("/save")
-    public int save(@RequestBody HashMap<String, Object> data) {
-        return productsService.save(data);
-    }
+     public ResponseEntity save(@RequestBody HashMap<String, Object> data) {
+        int result = productsService.save(data);
+        return ResponseEntity.ok(result);
+     }
 
     @GetMapping("/search")
-    public List<Products> searchProducts(
+    public ResponseEntity<List<Products>> searchProducts(
         @RequestParam String query,
         @RequestParam String category
     ) {
-        return productsService.searchProducts(query, category);
+        List<Products> products =  productsService.searchProducts(query, category);
+        return ResponseEntity.ok(products);
     }
 }
