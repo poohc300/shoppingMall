@@ -1,4 +1,4 @@
-package com.example.shoppingMall.exception;
+package com.example.shoppingMall.Global.exception;
 
 public class CustomException extends RuntimeException{
 

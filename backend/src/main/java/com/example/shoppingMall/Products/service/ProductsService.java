@@ -2,8 +2,8 @@ package com.example.shoppingMall.Products.service;
 
 import com.example.shoppingMall.Products.mapper.ProductsMapper;
 import com.example.shoppingMall.Products.model.Products;
-import com.example.shoppingMall.exception.CustomException;
-import com.example.shoppingMall.exception.ErrorCode;
+import com.example.shoppingMall.Global.exception.CustomException;
+import com.example.shoppingMall.Global.exception.ErrorCode;
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,6 @@
-package com.example.shoppingMall.config;
+package com.example.shoppingMall.Global.config;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,14 +22,22 @@ public class RedisConfig {
     @Value("${spring.redis.password}")
     private String password;
 
+    @PostConstruct
+    public void init() {
+         System.out.println("Redis Host: " + host);
+         System.out.println("Redis Port: " + port);
+         System.out.println("Redis Password: " + password);
+    }
+
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
-        redisStandaloneConfiguration.setHostName(host);
-        redisStandaloneConfiguration.setPort(port);
-        redisStandaloneConfiguration.setPassword(password);
-        LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(redisStandaloneConfiguration);
-        return lettuceConnectionFactory;
+
+        RedisStandaloneConfiguration redisConfig = new RedisStandaloneConfiguration();
+        redisConfig.setHostName(host);
+        redisConfig.setPort(port);
+        redisConfig.setPassword(password);
+
+        return new LettuceConnectionFactory(redisConfig);
     }
 
     @Bean

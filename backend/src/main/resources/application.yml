@@ -1,12 +1,14 @@
 # DB setting
 spring:
+  config:
+    import: optional:file:.env[.properties]
   application:
     name: shoppingMall
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://aws-0-ap-northeast-2.pooler.supabase.com:6543/postgres
-    username: postgres.fubzffduvwgkmwratshu
-    password: 1!2@3#4$qwer
+    url: ${DB_HOST}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     hikari:
       schema: shoppingMall
       maximum-pool-size: 10
@@ -16,9 +18,9 @@ spring:
       max-lifetime: 200000
       connection-timeout: 30000
   redis:
-    host: redis-18049.c340.ap-northeast-2-1.ec2.redns.redis-cloud.com
-    port: 18049
-    password: CRSnzFHeElWF90SRVcShHO2GWs99T0oX
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    password: ${REDIS_PASSWORD}
   session:
     store-type: redis
     timeout: 1800
@@ -38,3 +40,11 @@ logging:
       springframework: DEBUG
     com:
       example: DEBUG
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: 360000
+
+jasypt:
+  encryptor:
+    password: ${JASYPT_ENCRYPTOR_PASSWORD}

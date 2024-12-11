@@ -1,4 +1,4 @@
-package com.example.shoppingMall.exception;
+package com.example.shoppingMall.Global.exception;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

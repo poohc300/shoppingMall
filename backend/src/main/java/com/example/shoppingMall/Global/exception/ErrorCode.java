@@ -1,4 +1,4 @@
-package com.example.shoppingMall.exception;
+package com.example.shoppingMall.Global.exception;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -6,9 +6,9 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 @JsonFormat(shape = Shape.OBJECT)
 public enum ErrorCode {
     // Customer
-    CUSTOMER_NOT_FOUND(404, "1001", "없는 유저입니다."),
-    CUSTOMER_DUPLICATED(409, "1002", "중복된 유저입니다."),
-
+    USER_NOT_FOUND(404, "1001", "없는 유저입니다."),
+    USER_DUPLICATED(409, "1002", "중복된 유저입니다."),
+    INVALID_USERNAME_OR_PASSWORD(400, "1003", "잘못입력된 유저정보입니다."),
     // Products
     PRODUCTS_NOT_FOUND(404, "2001", "상품이 존재하지 않습니다."),
     INVALID_PRODUCT_DATA(400, "2002", "상품 입력이 잘못되었습니다."),
