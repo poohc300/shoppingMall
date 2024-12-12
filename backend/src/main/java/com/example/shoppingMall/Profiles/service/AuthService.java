@@ -1,41 +1,48 @@
 package com.example.shoppingMall.Profiles.service;
 
-import com.example.shoppingMall.Profiles.mapper.UserMapper;
+import com.example.shoppingMall.Global.utils.JwtUtil;
+import com.example.shoppingMall.Profiles.mapper.AuthMapper;
 import com.example.shoppingMall.Profiles.model.User;
 import com.example.shoppingMall.Global.exception.CustomException;
 import com.example.shoppingMall.Global.exception.ErrorCode;
 import java.util.HashMap;
 import org.jasypt.encryption.StringEncryptor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class UserService {
+public class AuthService {
 
     private final StringEncryptor stringEncryptor;
-    private final UserMapper userMapper;
+    private final AuthMapper authMapper;
+    private final JwtUtil jwtUtil;
 
-    public UserService(StringEncryptor stringEncryptor, UserMapper userMapper) {
+    public AuthService(StringEncryptor stringEncryptor, AuthMapper authMapper, JwtUtil jwtUtil) {
         this.stringEncryptor = stringEncryptor;
-        this.userMapper = userMapper;
+        this.authMapper = authMapper;
+        this.jwtUtil = jwtUtil;
     }
 
 
     @Transactional
-    public int registerUser (HashMap<String, Object> data) {
+    public String registerUser (HashMap<String, Object> data) {
+        String username = data.get("username").toString();
         String rawPassword = data.get("user_password").toString();
         String encodedPassword = stringEncryptor.encrypt(rawPassword);
         data.put("user_password", encodedPassword);
-        return userMapper.signup(data);
+        int result = authMapper.signup(data);
+
+        if(result == 0) {
+            throw new CustomException(ErrorCode.REGISTRATION_FAILED);
+        }
+        String token = jwtUtil.generateToken(username, "USER");
+        // 생성된 토큰 레디스에 삽입
+
+        return token;
     }
 
     public User authenticateUser(HashMap<String, Object> data) {
-        User user = userMapper.findByUsername(data.get("username").toString());
+        User user = authMapper.findByUsername(data.get("username").toString());
 
         if(user == null) {
             throw new CustomException(ErrorCode.USER_NOT_FOUND);

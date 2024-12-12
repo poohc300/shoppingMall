@@ -1,7 +1,6 @@
-package com.example.shoppingMall.Global.auth;
+package com.example.shoppingMall.Global.security;
 
 import com.example.shoppingMall.Global.utils.JwtUtil;
-import com.example.shoppingMall.Profiles.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,17 +27,20 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String header = request.getHeader("Authorization");
+        boolean isTokenValid = false;
         if(header == null || !header.startsWith("Bearer ")) {
-
             filterChain.doFilter(request, response);
             return;
         }
         String token = header.substring(7);
+        isTokenValid = jwtUtil.validateToken(token); // 여기서 토큰 예외처리해야함
 
-        if(jwtUtil.validateToken(token)) {
-            String username = jwtUtil.getUserNameFromToken(token);
-            //CustomAuthenticationToken authenticationToken = new CustomAuthenticationToken(username, );
-        }
+        // SecurityContextHolder에 토큰 저장해야함
+
+        // 토큰 유형성 검사 속성에 저장
+        request.setAttribute("isTokenValid", isTokenValid);
+
+        // 성공하면 authenticationFilter로 이동
         filterChain.doFilter(request, response);
     }
 }

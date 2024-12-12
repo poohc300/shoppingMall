@@ -1,10 +1,10 @@
 package com.example.shoppingMall.Global.config;
 
-import com.example.shoppingMall.Global.auth.CustomAuthenticationFilter;
-import com.example.shoppingMall.Global.auth.CustomAuthenticationProvider;
-import com.example.shoppingMall.Global.auth.JwtAuthorizationFilter;
+import com.example.shoppingMall.Global.security.CustomAuthenticationFilter;
+import com.example.shoppingMall.Global.security.CustomAuthenticationProvider;
+import com.example.shoppingMall.Global.security.JwtAuthorizationFilter;
 import com.example.shoppingMall.Global.utils.JwtUtil;
-import com.example.shoppingMall.Profiles.service.UserService;
+import com.example.shoppingMall.Profiles.service.AuthService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,8 +13,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -30,7 +28,7 @@ public class SecurityConfig {
     public SecurityConfig(
         CustomAuthenticationProvider customAuthenticationProvider,
         JwtUtil jwtUtil,
-        UserService userService
+        AuthService authService
     ) {
         this.customAuthenticationProvider = customAuthenticationProvider;
         this.jwtUtil = jwtUtil;

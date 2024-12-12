@@ -5,10 +5,12 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 @JsonFormat(shape = Shape.OBJECT)
 public enum ErrorCode {
-    // Customer
+    // User
     USER_NOT_FOUND(404, "1001", "없는 유저입니다."),
     USER_DUPLICATED(409, "1002", "중복된 유저입니다."),
     INVALID_USERNAME_OR_PASSWORD(400, "1003", "잘못입력된 유저정보입니다."),
+    REGISTRATION_FAILED(400, "1004", "유저 생성에 실패하였습니다."),
+
     // Products
     PRODUCTS_NOT_FOUND(404, "2001", "상품이 존재하지 않습니다."),
     INVALID_PRODUCT_DATA(400, "2002", "상품 입력이 잘못되었습니다."),
@@ -20,6 +22,7 @@ public enum ErrorCode {
     // OrdersProducts
     EMPTY_ORDERS_PRODUCTS_LISTS(404, "4001", "주문 상품이 없습니다"),
     INVALID_ORDERS_PRODUCTS_DATA(400, "4002", "주문 상품 입력이 잘못되었습니다."),
+
     // COMMON
     PAGE_NOT_FOUND(404, "9001", "존재하지 않는 페이지입니다.");
 
