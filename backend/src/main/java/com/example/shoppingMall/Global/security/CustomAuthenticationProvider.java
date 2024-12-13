@@ -2,8 +2,8 @@ package com.example.shoppingMall.Global.security;
 
 import com.example.shoppingMall.Global.exception.CustomException;
 import com.example.shoppingMall.Global.exception.ErrorCode;
-import com.example.shoppingMall.Profiles.model.User;
-import com.example.shoppingMall.Profiles.service.AuthService;
+import com.example.shoppingMall.Auth.model.User;
+import com.example.shoppingMall.Auth.service.AuthService;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;

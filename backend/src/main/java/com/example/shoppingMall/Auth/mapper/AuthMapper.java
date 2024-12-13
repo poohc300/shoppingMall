@@ -1,6 +1,6 @@
-package com.example.shoppingMall.Profiles.mapper;
+package com.example.shoppingMall.Auth.mapper;
 
-import com.example.shoppingMall.Profiles.model.User;
+import com.example.shoppingMall.Auth.model.User;
 import java.util.HashMap;
 import org.apache.ibatis.annotations.Mapper;
 

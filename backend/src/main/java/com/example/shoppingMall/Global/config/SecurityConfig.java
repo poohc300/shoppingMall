@@ -4,7 +4,7 @@ import com.example.shoppingMall.Global.security.CustomAuthenticationFilter;
 import com.example.shoppingMall.Global.security.CustomAuthenticationProvider;
 import com.example.shoppingMall.Global.security.JwtAuthorizationFilter;
 import com.example.shoppingMall.Global.utils.JwtUtil;
-import com.example.shoppingMall.Profiles.service.AuthService;
+import com.example.shoppingMall.Auth.service.AuthService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,7 +1,7 @@
-package com.example.shoppingMall.Profiles.controller;
+package com.example.shoppingMall.Auth.controller;
 import com.example.shoppingMall.Global.utils.JwtUtil;
-import com.example.shoppingMall.Profiles.model.User;
-import com.example.shoppingMall.Profiles.service.AuthService;
+import com.example.shoppingMall.Auth.model.User;
+import com.example.shoppingMall.Auth.service.AuthService;
 import java.util.HashMap;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -14,7 +14,7 @@
             #{user_role}
         )
     </insert>
-    <select id="findByUsername" resultType="com.example.shoppingMall.Profiles.model.User">
+    <select id="findByUsername" resultType="com.example.shoppingMall.Auth.model.User">
         SELECT
             u.id,
             u.username,

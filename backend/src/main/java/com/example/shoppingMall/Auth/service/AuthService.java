@@ -1,8 +1,8 @@
-package com.example.shoppingMall.Profiles.service;
+package com.example.shoppingMall.Auth.service;
 
 import com.example.shoppingMall.Global.utils.JwtUtil;
-import com.example.shoppingMall.Profiles.mapper.AuthMapper;
-import com.example.shoppingMall.Profiles.model.User;
+import com.example.shoppingMall.Auth.mapper.AuthMapper;
+import com.example.shoppingMall.Auth.model.User;
 import com.example.shoppingMall.Global.exception.CustomException;
 import com.example.shoppingMall.Global.exception.ErrorCode;
 import java.util.HashMap;

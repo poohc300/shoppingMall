@@ -1,4 +1,4 @@
-package com.example.shoppingMall.Profiles.model;
+package com.example.shoppingMall.Auth.model;
 import lombok.Data;
 
 @Data
