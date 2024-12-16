@@ -39,3 +39,8 @@ button {
 button:hover {
   background-color: #45a049;
 }
+
+.guide {
+  cursor: pointer;
+  margin-top: 20px;
+}

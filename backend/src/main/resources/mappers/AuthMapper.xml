@@ -1,29 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.shoppingMall.Profiles.mapper.AuthMapper">
+<mapper namespace="com.example.shoppingMall.Auth.mapper.AuthMapper">
     <insert id="signup">
         INSERT INTO users (
-            username,
+            user_id,
             user_password,
+            username,
+            date_of_birth,
+            phone_number,
             email,
+            address,
             user_role
         ) VALUES (
-            #{username},
+            #{user_id},
             #{user_password},
+            #{username},
+            #{date_of_birth},
+            #{phone_number},
             #{email},
-            #{user_role}
+            #{address},
+            1
         )
     </insert>
-    <select id="findByUsername" resultType="com.example.shoppingMall.Auth.model.User">
+    <select id="findByUserId" resultType="com.example.shoppingMall.Auth.model.User">
         SELECT
             u.id,
-            u.username,
+            u.user_id,
             u.user_password,
+            u.username,
+            u.date_of_birth,
+            u.phone_number,
             u.email,
+            u.address,
             u.user_role,
             cc.description as user_role_name
         FROM users u
-        LEFT JOIN common_codes cc on cc.code = p.user_role
-        WHERE p.username = #{username}
+        LEFT JOIN common_codes cc on cc.code = u.user_role
+        WHERE u.user_id = #{user_id}
     </select>
 </mapper>

@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import styles from './Auth.module.css';
+import * as styles from './Auth.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const navigate = useNavigate();
+  const url = 'http://localhost:8081/';
+
   const [form, setForm] = useState({
-    username: '',
-    password: '',
+    user_id: '',
+    user_password: '',
   });
 
   const handleChange = (e) => {
@@ -17,30 +21,77 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // 로그인 로직을 여기에 추가
-    console.log(form);
+    login(form);
+  };
+
+  const login = (param) => {
+    const data = {
+      user_id: param.user_id,
+      user_password: param.user_password,
+    };
+
+    fetch(url + 'auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+      credentials: 'include',
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((errorData) => {
+            throw new Error(JSON.stringify(errorData));
+          });
+        }
+        console.log(response);
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        localStorage.setItem('token', data.token);
+        navigate('/');
+      })
+      .catch((error) => alert(error));
+  };
+
+  const handleClick = () => {
+    navigate('/auth/signup');
   };
 
   return (
     <div className={styles.container}>
+      <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <input
           type='text'
           name='user_id'
-          placeholder='Username'
-          value={form.username}
+          placeholder='ID'
+          value={form.user_id}
           onChange={handleChange}
+          autocomplete='new-password'
           required
         />
         <input
           type='password'
-          name='password'
+          name='user_password'
           placeholder='Password'
-          value={form.password}
+          value={form.user_password}
           onChange={handleChange}
+          autocomplete='new-password'
           required
         />
         <button type='submit'>로그인</button>
       </form>
+      <div
+        className={styles.guide}
+        tabIndex={0}
+        onClick={() => {
+          handleClick();
+        }}
+      >
+        회원가입 하기
+      </div>
     </div>
   );
 };

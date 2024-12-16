@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -46,8 +47,11 @@ public class SecurityConfig {
             jwtUtil
         );
         customAuthenticationFilter.setFilterProcessesUrl("/login");
+        CookieCsrfTokenRepository csrfTokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
+
 
         http
+            .csrf(csrf -> csrf.disable())
             .httpBasic(AbstractHttpConfigurer::disable)
             .formLogin(AbstractHttpConfigurer::disable)
             .sessionManagement(sessionManagement -> sessionManagement
@@ -55,7 +59,7 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(authorize ->
                 authorize
-                    .requestMatchers("/products/**", "/login", "/signup").permitAll()
+                    .requestMatchers("/products/**", "/auth/login", "/auth/signup", "/auth/csrf-token").permitAll()
                     .anyRequest().authenticated())
             .addFilter(customAuthenticationFilter)
             .addFilterBefore(
@@ -72,6 +76,7 @@ public class SecurityConfig {
         corsConfig.setAllowCredentials(true);
         corsConfig.addAllowedHeader("*");
         corsConfig.addAllowedMethod("*");
+        corsConfig.addExposedHeader("Set-Cookie");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfig);
         return source;

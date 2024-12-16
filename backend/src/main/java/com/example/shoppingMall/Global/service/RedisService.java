@@ -13,15 +13,15 @@ public class RedisService {
         this.redisTemplate = redisTemplate;
     }
 
-    public void saveUserSession(String username, String token) {
-        redisTemplate.opsForValue().set(username, token, 1, TimeUnit.HOURS);
+    public void saveUserSession(String user_id, String token) {
+        redisTemplate.opsForValue().set(user_id, token, 1, TimeUnit.HOURS);
     }
 
-    public String getUserSession(String username) {
-        return (String) redisTemplate.opsForValue().get(username);
+    public String getUserSession(String user_id) {
+        return (String) redisTemplate.opsForValue().get(user_id);
     }
 
-    public void deleteUserSession(String username) {
-        redisTemplate.delete(username);
+    public void deleteUserSession(String user_id) {
+        redisTemplate.delete(user_id);
     }
 }

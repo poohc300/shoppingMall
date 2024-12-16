@@ -8,5 +8,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface AuthMapper {
 
     int signup(HashMap<String, Object> data);
-    User findByUsername(String username);
+    User findByUserId(String user_id);
 }

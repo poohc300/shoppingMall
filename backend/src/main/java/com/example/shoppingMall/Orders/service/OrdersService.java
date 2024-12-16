@@ -15,7 +15,6 @@ import com.example.shoppingMall.Orders.model.OrdersProducts;;
 @Service
 public class OrdersService {
 
-
     @Autowired
     private OrdersMapper ordersMapper;
 
@@ -88,8 +87,6 @@ public class OrdersService {
         if(result == 0) {
             throw new CustomException(ErrorCode.INVALID_ORDERS_PRODUCTS_DATA);
         }
-
-
 
         if(result > 0) {
             // orders_id로 주문상품 리스트 조회
