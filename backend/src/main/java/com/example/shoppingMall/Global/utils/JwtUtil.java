@@ -67,7 +67,7 @@ public class JwtUtil {
         return getExpirationDateFromToken(token).before(new Date());
     }
 
-    public String getUserNameFromToken(String token) {
+    public String getUserIdFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
 

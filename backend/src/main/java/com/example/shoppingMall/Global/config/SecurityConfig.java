@@ -25,6 +25,7 @@ public class SecurityConfig {
 
     private final CustomAuthenticationProvider customAuthenticationProvider;
     private final JwtUtil jwtUtil;
+    private final AuthService authService;
 
     public SecurityConfig(
         CustomAuthenticationProvider customAuthenticationProvider,
@@ -33,6 +34,7 @@ public class SecurityConfig {
     ) {
         this.customAuthenticationProvider = customAuthenticationProvider;
         this.jwtUtil = jwtUtil;
+        this.authService = authService;
     }
 
     @Bean
@@ -59,13 +61,13 @@ public class SecurityConfig {
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(authorize ->
                 authorize
-                    .requestMatchers("/products/**", "/auth/login", "/auth/signup", "/auth/csrf-token").permitAll()
+                    .requestMatchers( "/auth/login", "/auth/signup", "/auth/csrf-token").permitAll()
                     .anyRequest().authenticated())
-            .addFilter(customAuthenticationFilter)
             .addFilterBefore(
-                new JwtAuthorizationFilter(authManager, jwtUtil),
+                new JwtAuthorizationFilter(authManager, jwtUtil, authService),
                 customAuthenticationFilter.getClass()
             );
+
         return http.build();
     }
 

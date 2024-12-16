@@ -8,9 +8,16 @@ const HomePage = () => {
   const { query, category } = useOutletContext();
   const [products, setProducts] = useState([]);
   const [recommendProducts, setRecommendProducts] = useState([]);
+  const [token, setToken] = useState('');
 
   const fetchRecommendProducts = useCallback(() => {
-    fetch(api + 'products/all')
+    fetch(api + 'products/all', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => setRecommendProducts(data))
       .catch((error) => {
@@ -59,6 +66,11 @@ const HomePage = () => {
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
+
+  useEffect(() => {
+    const data = localStorage.getItem('token');
+    setToken(data);
+  }, []);
 
   return (
     <div className={styles.homePage}>

@@ -27,7 +27,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         // http 요청정보추출
-        String username = request.getParameter("username");
+        String user_id = request.getParameter("user_id");
         String user_password = request.getParameter("user_password");
 
         /*
@@ -41,7 +41,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         * authenticated: 인증 상태, 기본은 false 인증후 true
         */
 
-        CustomAuthenticationToken authToken = new CustomAuthenticationToken(username, user_password);
+        CustomAuthenticationToken authToken = new CustomAuthenticationToken(user_id, user_password);
         return getAuthenticationManager().authenticate(authToken);
     }
 

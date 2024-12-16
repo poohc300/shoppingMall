@@ -63,4 +63,13 @@ public class AuthService {
         return user;
     }
 
+    public User findByUserId(String user_id) {
+        User user =  authMapper.findByUserId(user_id);
+
+        if(user == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+        return user;
+    }
+
 }
