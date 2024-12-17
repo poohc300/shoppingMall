@@ -4,13 +4,15 @@ import com.example.shoppingMall.Global.exception.ErrorCode;
 import com.example.shoppingMall.Global.utils.JwtUtil;
 import com.example.shoppingMall.Auth.model.User;
 import com.example.shoppingMall.Auth.service.AuthService;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,8 +46,22 @@ public class AuthController {
         result.put("token", token);
         return ResponseEntity.ok().body(result);
     }
-    @GetMapping("/csrf-token")
-    public CsrfToken csrfToken(CsrfToken csrfToken) {
-        return csrfToken;
+    @PostMapping("/validate-token")
+    public ResponseEntity validateToken(@RequestHeader("Authorization") String token) {
+        String jwtToken = token.substring(7);
+        System.out.println(jwtToken);
+
+        try {
+            boolean isValid = jwtUtil.validateToken(jwtToken);
+            System.out.println(isValid);
+            if(isValid) {
+              return ResponseEntity.ok().build();
+            } else {
+              return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+            }
+        } catch (JwtException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
     }
 }
