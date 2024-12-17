@@ -2,15 +2,17 @@ import React, { useState, useCallback, useEffect } from 'react';
 import * as styles from './HomePage.module.css';
 import ProductList from '../../components/Product/ProductList';
 import { useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const api = 'http://localhost:8081/';
   const { query, category } = useOutletContext();
   const [products, setProducts] = useState([]);
   const [recommendProducts, setRecommendProducts] = useState([]);
-  const [token, setToken] = useState('');
+  const token = localStorage.getItem('token');
 
-  const fetchRecommendProducts = useCallback(() => {
+  const fetchRecommendProducts = () => {
     fetch(api + 'products/all', {
       method: 'GET',
       headers: {
@@ -18,12 +20,18 @@ const HomePage = () => {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+        if (response.status !== 200) {
+          navigate('/auth/login');
+        }
+        return response.json();
+      })
       .then((data) => setRecommendProducts(data))
       .catch((error) => {
         console.error(error);
       });
-  }, [api]);
+  };
 
   const fetchProducts = useCallback(() => {
     if (query) {
@@ -35,9 +43,8 @@ const HomePage = () => {
         });
     } else {
       setProducts([]);
-      fetchRecommendProducts();
     }
-  }, [query, category, fetchRecommendProducts]);
+  }, [query, category]);
 
   const handleClick = (e) => {
     const action = e.target.id;
@@ -61,16 +68,11 @@ const HomePage = () => {
 
   useEffect(() => {
     fetchRecommendProducts();
-  }, [fetchRecommendProducts]);
+  }, []);
 
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
-
-  useEffect(() => {
-    const data = localStorage.getItem('token');
-    setToken(data);
-  }, []);
 
   return (
     <div className={styles.homePage}>

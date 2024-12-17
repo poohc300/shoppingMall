@@ -64,6 +64,7 @@ public class JwtUtil {
     }
 
     public Boolean isTokenExpired(String token) {
+        System.out.println("expired date: " + getExpirationDateFromToken(token));
         return getExpirationDateFromToken(token).before(new Date());
     }
 
@@ -72,6 +73,7 @@ public class JwtUtil {
     }
 
     public Date getExpirationDateFromToken(String token) {
+
         return getClaimFromToken(token, Claims::getExpiration);
     }
 

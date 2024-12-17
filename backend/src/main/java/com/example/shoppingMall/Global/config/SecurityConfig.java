@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -50,6 +51,7 @@ public class SecurityConfig {
         );
         customAuthenticationFilter.setFilterProcessesUrl("/login");
         CookieCsrfTokenRepository csrfTokenRepository = CookieCsrfTokenRepository.withHttpOnlyFalse();
+        JwtAuthorizationFilter jwtAuthorizationFilter = new JwtAuthorizationFilter(authManager, jwtUtil, authService);
 
 
         http
@@ -64,8 +66,11 @@ public class SecurityConfig {
                     .requestMatchers( "/auth/login", "/auth/signup", "/auth/csrf-token").permitAll()
                     .anyRequest().authenticated())
             .addFilterBefore(
-                new JwtAuthorizationFilter(authManager, jwtUtil, authService),
+                jwtAuthorizationFilter,
                 customAuthenticationFilter.getClass()
+            )
+            .addFilter(
+                customAuthenticationFilter
             );
 
         return http.build();
@@ -91,6 +96,5 @@ public class SecurityConfig {
         builder.authenticationProvider(customAuthenticationProvider);
         return builder.build();
     }
-
 }
 
