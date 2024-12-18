@@ -26,10 +26,10 @@ const App = () => {
               />
             </Route>
             <Route path='/customer' element={<Layout />}>
-              <Route index element={<CustomerPage />} />
+              <Route index element={<PrivateRoute element={CustomerPage} />} />
               <Route
                 path='ordersHistory/:orderId'
-                element={<OrdersHistoryPage />}
+                element={<PrivateRoute element={OrdersHistoryPage} />}
               />
             </Route>
             <Route path='/auth' element={<AuthPage />}>
