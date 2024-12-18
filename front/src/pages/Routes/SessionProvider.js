@@ -8,15 +8,7 @@ const SessionValidation = ({ children }) => {
 
   const validateSession = async () => {
     const accessToken = localStorage.getItem('accessToken');
-    const response = await validateToken(
-      'http://localhost:8081/auth/validate-token',
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
+    const response = await validateToken(accessToken);
     if (!response.ok) {
       navigate('/auth/login');
     }

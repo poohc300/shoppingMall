@@ -60,7 +60,7 @@ public class AuthController {
             if(isValid) {
               return ResponseEntity.ok().build();
             } else {
-              return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+              return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token has expired");
             }
         } catch (JwtException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

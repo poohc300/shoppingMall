@@ -63,6 +63,7 @@ public class JwtUtil {
     public boolean validateToken(String token) {
        try {
            Claims claims = getClaimFromToken(token);
+           System.out.println(claims);
            return !isTokenExpired(claims);
        } catch (Exception e) {
            return false;

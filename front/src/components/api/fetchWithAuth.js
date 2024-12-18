@@ -1,11 +1,11 @@
-export const validateToken = async (url, options = {}) => {
+export const validateToken = async (accessToken) => {
   try {
-    const response = await fetch(url, options);
-    if (response.status === 401) {
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      navigate('/auth/login');
-    }
+    const response = await fetch('http://localhost:8081/auth/validate-token', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
     return response;
   } catch (error) {
     console.error(error);
