@@ -72,4 +72,14 @@ public class AuthService {
         return user;
     }
 
+    public String findJwtToken(String user_id) {
+
+        String userSession = redisService.getUserSession(user_id);
+
+        if(userSession == null) {
+            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        }
+        return userSession;
+    }
+
 }

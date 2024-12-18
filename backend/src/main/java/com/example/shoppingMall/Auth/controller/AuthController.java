@@ -42,8 +42,11 @@ public class AuthController {
         if(user == null) {
           ResponseEntity.status(401).body(ErrorCode.INVALID_USERNAME_OR_PASSWORD);
         }
-        String token = jwtUtil.generateToken(user.getUser_id(), user.getUser_role());
-        result.put("token", token);
+        String accessToken = jwtUtil.generateToken(user.getUser_id(), user.getUser_role());
+        String refreshToken = jwtUtil.refreshToken(user.getUser_id());
+        result.put("accessToken", accessToken);
+        result.put("refreshToken", refreshToken);
+
         return ResponseEntity.ok().body(result);
     }
     @PostMapping("/validate-token")
@@ -62,6 +65,6 @@ public class AuthController {
         } catch (JwtException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-
     }
+
 }

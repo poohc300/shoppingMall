@@ -49,7 +49,9 @@ const Login = () => {
       })
       .then((data) => {
         console.log(data);
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('accessToken', data.accessToken);
+        localStorage.setItem('refreshToken', data.refreshToken);
+
         navigate('/');
       })
       .catch((error) => alert(error));
@@ -58,27 +60,6 @@ const Login = () => {
   const handleClick = () => {
     navigate('/auth/signup');
   };
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    console.log('token:: ', token);
-    if (token) {
-      fetch(url + 'auth/validate-token', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => {
-          console.log(response);
-          if (response.ok) {
-            navigate('/');
-          }
-        })
-        .catch((error) => console.log(error));
-    }
-  }, []);
 
   return (
     <div className={styles.container}>
