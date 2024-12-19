@@ -4,7 +4,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import * as styles from './Layout.module.css';
 
-const Layout = () => {
+const Layout = (isAuthenticated) => {
   const [data, setData] = useState({
     query: '',
     category: '',
@@ -19,7 +19,7 @@ const Layout = () => {
   return (
     <div className={styles.layout}>
       <div className={styles.header}>
-        <Header onSearch={handleSearch} />
+        <Header onSearch={handleSearch} isAuthenticated={isAuthenticated} />
       </div>
       <div className={styles.main}>
         <Outlet context={data} /> {/** 자식 라우트 렌더링 되는 곳 */}

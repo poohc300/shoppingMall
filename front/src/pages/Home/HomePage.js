@@ -12,7 +12,7 @@ const HomePage = () => {
   const [recommendProducts, setRecommendProducts] = useState([]);
   const token = localStorage.getItem('token');
 
-  const fetchRecommendProducts = () => {
+  const fetchRecommendProducts = (isAuthenticated = false) => {
     fetch(api + 'products/all', {
       method: 'GET',
       headers: {

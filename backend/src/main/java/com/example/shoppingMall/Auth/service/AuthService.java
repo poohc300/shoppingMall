@@ -99,7 +99,12 @@ public class AuthService {
         return result;
     }
 
-
+    public boolean logout(HashMap<String, Object> data) {
+        String user_id = data.get("user_id").toString();
+        // delete all user's tokens in redis
+        boolean result = redisService.deleteUserSession(user_id);
+        return result;
+    }
 
 
 }

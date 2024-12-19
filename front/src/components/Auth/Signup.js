@@ -56,8 +56,13 @@ const SignUp = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+        localStorage.setItem('accessToken', data.accessToken);
+        localStorage.setItem('refreshToken', data.refreshToken);
+
+        navigate('/');
+        alert('회원가입에 성공했습니다');
       })
-      .catch((error) => console.log(error));
+      .catch((error) => alert('회원가입에 실패했습니다 :' + error));
   };
 
   return (

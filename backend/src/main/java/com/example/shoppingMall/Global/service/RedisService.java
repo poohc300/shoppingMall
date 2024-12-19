@@ -26,7 +26,10 @@ public class RedisService {
         return (HashMap<String, Object>) redisTemplate.opsForValue().get(user_id);
     }
 
-    public void deleteUserSession(String user_id) {
-        redisTemplate.delete(user_id);
+    public boolean deleteUserSession(String user_id) {
+
+        boolean result = redisTemplate.delete(user_id);
+
+        return result;
     }
 }

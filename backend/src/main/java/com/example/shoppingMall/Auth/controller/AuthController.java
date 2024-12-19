@@ -47,6 +47,14 @@ public class AuthController {
 
         return ResponseEntity.ok().body(result);
     }
+
+    @PostMapping("/logout")
+    public ResponseEntity logout(@RequestBody HashMap<String, Object> data) {
+
+         boolean result = authService.logout(data);
+         return ResponseEntity.ok().body(result);
+    }
+
     @PostMapping("/validate-token")
     public ResponseEntity validateToken(@RequestHeader("Authorization") String token) {
         String jwtToken = token.substring(7);
