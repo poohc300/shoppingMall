@@ -16,28 +16,27 @@ const App = () => {
   return (
     <div className='app'>
       <HashRouter>
-        <SessionProvider>
-          <Routes>
-            <Route path='/' element={<Layout />}>
-              <Route index element={<HomePage />} />
-              <Route
-                path='order/:productId'
-                element={<PrivateRoute element={OrdersPage} />}
-              />
-            </Route>
-            <Route path='/customer' element={<Layout />}>
-              <Route index element={<PrivateRoute element={CustomerPage} />} />
-              <Route
-                path='ordersHistory/:orderId'
-                element={<PrivateRoute element={OrdersHistoryPage} />}
-              />
-            </Route>
-            <Route path='/auth' element={<AuthPage />}>
-              <Route path='login' element={<Login />}></Route>
-              <Route path='signup' element={<SignUp />}></Route>
-            </Route>
-          </Routes>
-        </SessionProvider>
+        <Routes>
+          <Route path='/' element={<Layout />}>
+            <Route index element={<PrivateRoute element={HomePage} />} />
+            {/* <Route index element={<HomePage />} /> */}
+            <Route
+              path='order/:productId'
+              element={<PrivateRoute element={OrdersPage} />}
+            />
+          </Route>
+          <Route path='/customer' element={<Layout />}>
+            <Route index element={<PrivateRoute element={CustomerPage} />} />
+            <Route
+              path='ordersHistory/:orderId'
+              element={<PrivateRoute element={OrdersHistoryPage} />}
+            />
+          </Route>
+          <Route path='/auth' element={<AuthPage />}>
+            <Route path='login' element={<Login />}></Route>
+            <Route path='signup' element={<SignUp />}></Route>
+          </Route>
+        </Routes>
       </HashRouter>
     </div>
   );

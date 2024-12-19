@@ -30,22 +30,20 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity signup (@RequestBody HashMap<String, Object> data) {
-        String result = authService.registerUser(data);
+        HashMap<String, Object> result = authService.registerUser(data);
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("/login")
     public ResponseEntity login (@RequestBody HashMap<String, Object> data) {
-        User user = authService.authenticateUser(data);
         HashMap<String, Object> result = new HashMap<>();
+
+        User user = authService.authenticateUser(data);
 
         if(user == null) {
           ResponseEntity.status(401).body(ErrorCode.INVALID_USERNAME_OR_PASSWORD);
         }
-        String accessToken = jwtUtil.generateToken(user.getUser_id(), user.getUser_role());
-        String refreshToken = jwtUtil.refreshToken(user.getUser_id());
-        result.put("accessToken", accessToken);
-        result.put("refreshToken", refreshToken);
+        result = authService.authenticateToken(user);
 
         return ResponseEntity.ok().body(result);
     }
@@ -66,5 +64,15 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+    @PostMapping("/refresh-token")
+    public ResponseEntity refreshToken(@RequestBody String token) {
 
+        try {
+            String refreshToken = jwtUtil.generateRefreshToken(token);
+            System.out.println(refreshToken);
+            return ResponseEntity.ok().body(refreshToken);
+        } catch (JwtException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
 }

@@ -1,17 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { isTokenExpired } from '../../utils/jwtUtils';
 
 const PrivateRoute = ({ element: Component }) => {
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('accessToken');
-  const isAuthenticated = accessToken && !isTokenExpired(accessToken);
-  console.log('현재 인증상태: ', isAuthenticated);
-  if (!isAuthenticated) {
-    navigate('/auth/login');
-  }
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  return <Component />;
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
+
+    if (!accessToken || !refreshToken) {
+      alert('토큰이 존재하지 않아 로그인 페이지로 이동합니다');
+      navigate('/auth/login');
+    }
+
+    if (accessToken && isTokenExpired(accessToken)) {
+      console.log(isTokenExpired(accessToken));
+      alert('토큰이 만료되어 로그인 페이지로 이동합니다');
+
+      navigate('/auth/login');
+    }
+
+    if (accessToken && !isTokenExpired(accessToken)) {
+      setIsAuthenticated(true);
+    }
+  }, [navigate]);
+
+  return isAuthenticated ? <Component /> : null;
 };
 
 export default PrivateRoute;

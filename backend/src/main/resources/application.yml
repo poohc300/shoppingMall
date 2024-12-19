@@ -43,7 +43,8 @@ logging:
 
 jwt:
   secret: ${JWT_SECRET}
-  expiration: 3600
+  access_token_expiration: 36000
+  refresh_token_expiration: 3600000
 
 jasypt:
   encryptor:

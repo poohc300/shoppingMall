@@ -29,7 +29,7 @@ public class AuthService {
 
 
     @Transactional
-    public String registerUser (HashMap<String, Object> data) {
+    public HashMap<String, Object> registerUser (HashMap<String, Object> data) {
         System.out.println(data);
         String user_id = data.get("user_id").toString();
         String rawPassword = data.get("user_password").toString();
@@ -40,11 +40,12 @@ public class AuthService {
         if(result == 0) {
             throw new CustomException(ErrorCode.REGISTRATION_FAILED);
         }
-        String token = jwtUtil.generateToken(user_id, "USER");
+        String access_token = jwtUtil.generateAccessToken(user_id, "USER");
+        String refresh_token = jwtUtil.generateRefreshToken(user_id);
         // 생성된 토큰 레디스에 삽입
-        redisService.saveUserSession(user_id, token);
+        redisService.saveUserSession(user_id, access_token, refresh_token);
         // 레디스에서 다시 조회
-        String userToken = redisService.getUserSession(user_id);
+        HashMap<String, Object> userToken = redisService.getUserSession(user_id);
         return userToken;
     }
 
@@ -63,23 +64,42 @@ public class AuthService {
         return user;
     }
 
-    public User findByUserId(String user_id) {
-        User user =  authMapper.findByUserId(user_id);
+    public HashMap<String, Object> authenticateToken(User user) {
+        System.out.println(user);
+        HashMap<String, Object> result = new HashMap<>();
+        // get token from redis
+        result = redisService.getUserSession(user.getUser_id());
+        System.out.println(result);
 
-        if(user == null) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+        // if result is null
+        if(result == null) {
+            // generate new tokens
+            String accessToken = jwtUtil.generateAccessToken(user.getUser_id(), user.getUser_role());
+            String refreshToken = jwtUtil.generateRefreshToken(user.getUser_id());
+            // save tokens in redis
+            redisService.saveUserSession(user.getUser_id(), accessToken, refreshToken);
+            result.put("accessToken", accessToken);
+            result.put("refreshToken", refreshToken);
         }
-        return user;
+        String tempToken = result.get("accessToken").toString();
+        // validate token from redis
+        boolean isValid = false;
+        isValid = jwtUtil.validateToken(tempToken);
+
+        if(!isValid) {
+            // generate new tokens
+            String accessToken = jwtUtil.generateAccessToken(user.getUser_id(), user.getUser_role());
+            String refreshToken = jwtUtil.generateRefreshToken(user.getUser_id());
+            // save tokens in redis
+            redisService.saveUserSession(user.getUser_id(), accessToken, refreshToken);
+            result.put("accessToken", accessToken);
+            result.put("refreshToken", refreshToken);
+        }
+
+        return result;
     }
 
-    public String findJwtToken(String user_id) {
 
-        String userSession = redisService.getUserSession(user_id);
 
-        if(userSession == null) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
-        }
-        return userSession;
-    }
 
 }
