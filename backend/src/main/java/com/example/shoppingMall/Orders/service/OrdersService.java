@@ -1,5 +1,7 @@
 package com.example.shoppingMall.Orders.service;
 
+import com.example.shoppingMall.Auth.mapper.AuthMapper;
+import com.example.shoppingMall.Auth.model.User;
 import com.example.shoppingMall.Orders.mapper.OrdersMapper;
 import com.example.shoppingMall.Orders.model.Orders;
 import com.example.shoppingMall.Global.exception.CustomException;
@@ -18,10 +20,15 @@ public class OrdersService {
     @Autowired
     private OrdersMapper ordersMapper;
 
+    @Autowired
+    private AuthMapper authMapper;
+
     @Transactional
     public String save(HashMap<String, Object> data) {
         String newOrderId = generateOrderId();
+        int customer_id = getUserIdNumberByUserId(data.get("customer_id").toString());
         data.put("orders_id", newOrderId);
+        data.put("customer_id", customer_id);
 
         int ordersResult = ordersMapper.saveOrders(data);
         if(ordersResult == 0) {
@@ -131,5 +138,10 @@ public class OrdersService {
         int randomNum = 1000 + random.nextInt(9000);
 
         return  reducedTimeStr + randomNum;
+    }
+
+    public int getUserIdNumberByUserId(String user_id) {
+        User user = authMapper.findByUserId(user_id);
+        return user.getId();
     }
 }

@@ -37,6 +37,7 @@ const OrdersHistoryTable = ({ customerId = 0 }) => {
         </thead>
         <tbody>
           {orders ? (
+            orders.length > 0 &&
             orders.map((order) => (
               <React.Fragment key={order.order_id}>
                 <tr onClick={() => handleOnClick(order.order_id)}>

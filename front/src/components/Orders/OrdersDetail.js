@@ -3,6 +3,7 @@ import OrdersProducts from './OrdersProducts';
 import { useNavigate } from 'react-router-dom';
 import * as styles from './Orders.module.css';
 import Confirm from '../Common/Confirm';
+import { getUserIdFromRefreshToken } from '../../utils/jwtUtils';
 
 const OrderDetail = ({ productList = [] }) => {
   const navigate = useNavigate();
@@ -47,9 +48,15 @@ const OrderDetail = ({ productList = [] }) => {
     saveOrder();
   };
 
+  const getUserId = () => {
+    const userId = getUserIdFromRefreshToken();
+    console.log('사용자 아이디', userId);
+    return userId;
+  };
+
   const saveOrder = () => {
     const data = {
-      customer_id: 1, // 하드코딩
+      customer_id: getUserId(), // 하드코딩
       total_price: ordersPrice,
       ordersProducts: ordersProducts,
     };
@@ -58,6 +65,7 @@ const OrderDetail = ({ productList = [] }) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
+      credentials: 'include',
     })
       .then((response) => response.json())
       .then((data) => {
