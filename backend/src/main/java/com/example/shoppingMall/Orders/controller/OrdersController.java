@@ -29,7 +29,7 @@ public class OrdersController {
     }
 
     @GetMapping("/customer/{customer_id}")
-    public ResponseEntity findByCustomerId(@PathVariable int customer_id) {
+    public ResponseEntity findByCustomerId(@PathVariable String customer_id) {
        List<Orders> orders = ordersService.findByCustomerId(customer_id);
        return ResponseEntity.ok(orders);
     }

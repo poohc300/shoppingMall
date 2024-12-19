@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import * as styles from './CustomerPage.module.css';
 import OrdersHistoryTable from '../../components/Customer/OrdersHistoryTable';
+import { getUserIdFromRefreshToken } from '../../utils/jwtUtils';
 
 const CustomerPage = () => {
   const [activeTab, setActiveTab] = useState('orders');
-  const [customerId, setCustomerId] = useState(1);
 
   const renderContent = () => {
+    const customerId = getUserIdFromRefreshToken();
     switch (activeTab) {
       case 'orders':
         return <OrdersHistoryTable customerId={customerId} />; // 예: customerId를 prop으로 전달

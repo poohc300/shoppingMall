@@ -52,9 +52,11 @@ public class OrdersService {
         return newOrderId;
     }
 
-    public List<Orders> findByCustomerId(int customer_id) {
+    public List<Orders> findByCustomerId(String customer_id) {
+        // 0 받아온 아이디로 시퀀스 번호 조회
+        User user = authMapper.findByUserId(customer_id);
         // 1 주문 테이블 조회
-        List<Orders> orders = ordersMapper.findOrdersByCustomerId(customer_id);
+        List<Orders> orders = ordersMapper.findOrdersByCustomerId(user.getId());
         if(orders.isEmpty()) {
             throw new CustomException(ErrorCode.EMPTY_ORDERS_LISTS);
         }
