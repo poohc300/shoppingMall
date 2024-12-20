@@ -8,7 +8,8 @@ import { getUserIdFromRefreshToken } from '../../../utils/jwtUtils';
 const Header = ({ onSearch = (f) => f }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const isAuthenticated = useContext(AuthContext);
+  const { isAuthenticated, setIsLogoutProcess } = useContext(AuthContext);
+
   const url = 'http://localhost:8081/auth/';
 
   const handleClick = () => {
@@ -37,10 +38,12 @@ const Header = ({ onSearch = (f) => f }) => {
       })
       .then((data) => {
         console.log(data);
+        setIsLogoutProcess(true);
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
 
         navigate('/auth/login');
+        alert('로그아웃 되었습니다.');
       });
   };
   return (
