@@ -67,12 +67,13 @@ public class AuthService {
     public HashMap<String, Object> authenticateToken(User user) {
         System.out.println(user);
         HashMap<String, Object> result = new HashMap<>();
+        HashMap<String, Object> userToken = new HashMap<>();
         // get token from redis
-        result = redisService.getUserSession(user.getUser_id());
+        userToken = redisService.getUserSession(user.getUser_id());
         System.out.println(result);
 
         // if result is null
-        if(result == null) {
+        if(userToken == null) {
             // generate new tokens
             String accessToken = jwtUtil.generateAccessToken(user.getUser_id(), user.getUser_role());
             String refreshToken = jwtUtil.generateRefreshToken(user.getUser_id());
@@ -80,8 +81,9 @@ public class AuthService {
             redisService.saveUserSession(user.getUser_id(), accessToken, refreshToken);
             result.put("accessToken", accessToken);
             result.put("refreshToken", refreshToken);
+            return result;
         }
-        String tempToken = result.get("accessToken").toString();
+        String tempToken = userToken.get("accessToken").toString();
         // validate token from redis
         boolean isValid = false;
         isValid = jwtUtil.validateToken(tempToken);
@@ -94,6 +96,7 @@ public class AuthService {
             redisService.saveUserSession(user.getUser_id(), accessToken, refreshToken);
             result.put("accessToken", accessToken);
             result.put("refreshToken", refreshToken);
+            return result;
         }
 
         return result;
