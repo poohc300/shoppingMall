@@ -8,7 +8,6 @@ import com.example.shoppingMall.Global.exception.CustomException;
 import com.example.shoppingMall.Global.exception.ErrorCode;
 import java.util.HashMap;
 import org.jasypt.encryption.StringEncryptor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

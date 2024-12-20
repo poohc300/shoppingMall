@@ -49,3 +49,7 @@ jwt:
 jasypt:
   encryptor:
     password: ${JASYPT_ENCRYPTOR_PASSWORD}
+
+toss:
+  client_key: ${TOSS_CLIENT_KEY}
+  secret_key: ${TOSS_SECRET_KEY}
