@@ -1,6 +1,6 @@
 import React from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
-import Layout from './components/layout/Layout/Layout';
+import Layout from './components/Layout/Layout/Layout';
 import './styles/App.css';
 import HomePage from './pages/Home/HomePage';
 import OrdersPage from './pages/Orders/OrdersPage';
@@ -10,6 +10,8 @@ import PaymentPage from './pages/Payment/PaymentPage';
 import AuthPage from './pages/Auth/AuthPage';
 import Login from './components/Auth/Login';
 import SignUp from './components/Auth/Signup';
+import PaymentSuccess from './components/Payment/PaymentSuccess';
+import PaymentFail from './components/Payment/PaymentFail';
 import PrivateRoute from './pages/Routes/PrivateRoutes';
 import AuthProvider from './pages/Routes/AuthProvider';
 
@@ -35,6 +37,14 @@ const App = () => {
             </Route>
             <Route path='/payment' element={<Layout />}>
               <Route index element={<PrivateRoute element={PaymentPage} />} />
+              <Route
+                path='success'
+                element={<PrivateRoute element={PaymentSuccess} />}
+              />
+              <Route
+                path='fail'
+                element={<PrivateRoute element={PaymentFail} />}
+              />
             </Route>
             <Route path='/auth' element={<AuthPage />}>
               <Route path='login' element={<Login />}></Route>

@@ -53,7 +53,7 @@ const Header = ({ onSearch = (f) => f }) => {
           홈
         </div>
         <div className={styles.menu} onClick={() => navigate('/customer')}>
-          내정보
+          내 주문 정보
         </div>
         {isAuthenticated ? (
           <div className={styles.menu}>

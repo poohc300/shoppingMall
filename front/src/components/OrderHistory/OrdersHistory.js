@@ -68,12 +68,12 @@ const OrdersHistory = () => {
         let message = '';
 
         if (status === '2') {
-          message = '주문이 완료되었습니다!';
+          //message = '주문이 완료되었습니다!';
         }
         if (status === '3') {
           message = '주문이 취소되었습니다';
+          alert(message);
         }
-        alert(message);
       })
       .catch((error) => console.log(error));
   };
@@ -89,8 +89,6 @@ const OrdersHistory = () => {
       setDisabled(false);
     }
   }, [orders.status]);
-
-  useEffect(() => {}, [ordersProducts.quantity]);
 
   useEffect(() => {
     const totalPrice = ordersProducts.reduce((accumulator, product) => {
@@ -117,7 +115,7 @@ const OrdersHistory = () => {
   const handlePaymentClick = () => {
     console.log('결제 버튼 클릭');
     setConfirmMessage('결제하시겠습니까? ');
-    setStatus('2');
+    setStatus('1');
     setShowConfirm(true);
   };
 
@@ -236,14 +234,19 @@ const OrdersHistory = () => {
               주문취소
             </button>
             <button id='btn-payment' onClick={handlePaymentClick}>
-              주문완료
+              결제하기
             </button>
           </>
         )}
         {orders.status === '1' && (
-          <button id='btn-cancel' onClick={handleCancelClick}>
-            주문취소
-          </button>
+          <>
+            <button id='btn-cancel' onClick={handleCancelClick}>
+              주문취소
+            </button>
+            <button id='btn-payment' onClick={handlePaymentClick}>
+              결제하기
+            </button>
+          </>
         )}
         {orders.status === '2' && (
           <button id='btn-refund' onClick={handleRefundClick}>
@@ -256,11 +259,18 @@ const OrdersHistory = () => {
         <Confirm
           message={confirmMessage}
           onConfirm={() => {
-            if (status) {
+            if (status == 0) {
+              // 결제 전 주문 수정
+              updateOrders();
+            } else if (status == 1) {
+              // 결제
+              // 주문완료가 되어버림, 결제가 되고 나서 주문완료가 되어야함
+              updateOrdersStatus();
+              navigate('/payment', { state: orders });
+            } else if (status == 3) {
+              // 결제 취소 & 환불
               updateOrdersStatus();
               navigate('/customer', { state: orders.customer_id });
-            } else {
-              updateOrders();
             }
             setShowConfirm(false);
           }}

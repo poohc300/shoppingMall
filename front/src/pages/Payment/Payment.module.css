@@ -27,6 +27,24 @@
   white-space: nowrap; /* Prevent text wrapping */
 }
 
+.paymentMethod {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin-bottom: 20px;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.radioLabel input {
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
 .button {
   color: #f9fafb;
   background-color: #3182f6;
