@@ -1,0 +1,57 @@
+.PaymentPage {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.box_section {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 20px auto;
+  width: 600px;
+  text-align: center;
+}
+
+img {
+  margin: 20px 0;
+}
+
+h2 {
+  color: #0e0d0d; /* Green color to indicate success */
+}
+
+.typography_p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.p_grid_col {
+  flex: 1;
+}
+
+.text_left {
+  text-align: left;
+}
+
+.text_right {
+  text-align: right;
+}
+
+#response pre {
+  text-align: left;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+}
+
+#amount,
+#orderId,
+#paymentKey {
+  word-break: break-all;
+}

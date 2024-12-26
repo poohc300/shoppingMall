@@ -69,8 +69,8 @@ const PaymentPage = () => {
         amount: getAmount(),
         orderId: orderInfo.order_id, // 고유 주문번호
         orderName: getOrderName(),
-        successUrl: window.location.origin + '/#/payment/success', // 결제 요청이 성공하면 리다이렉트되는 URL
-        failUrl: window.location.origin + '/#/fail', // 결제 요청이 실패하면 리다이렉트되는 URL
+        successUrl: window.location.origin + '/payment/success', // 결제 요청이 성공하면 리다이렉트되는 URL
+        failUrl: window.location.origin + '/payment/fail', // 결제 요청이 실패하면 리다이렉트되는 URL
         customerEmail: 'poohc300@gmail.com',
         customerName: '김토스',
         // 가상계좌 안내, 퀵계좌이체 휴대폰 번호 자동 완성에 사용되는 값입니다. 필요하다면 주석을 해제해 주세요.
