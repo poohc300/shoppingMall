@@ -1,7 +1,8 @@
 # DB setting
 spring:
   config:
-    import: optional:file:.env[.properties]
+    # import: optional:file:.env[.properties]
+        import: file:.env[.properties]
   application:
     name: shoppingMall
   datasource:
@@ -39,7 +40,8 @@ logging:
     org:
       springframework: DEBUG
     com:
-      example: DEBUG
+      example: DEBUG\
+    root: DEBUG
 
 jwt:
   secret: ${JWT_SECRET}
